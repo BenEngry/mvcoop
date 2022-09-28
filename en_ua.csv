@@ -1,0 +1,30 @@
+Chat List|Чат Список
+Message id|Номер Листа
+User Name|Ім`я користувача
+Title|Заголовок
+Message|Повідомлення
+Created At|Дата створення
+Message length must be not less then 2 characters!|Повідомлення має містити мінімум 2 символи!
+Name must be from 2 to 140 chars!|Імя має бути від 2 до 140 символів!
+Title must be from 10 to 140 chars!|Заголовок має бути від 10 до 140 символів!
+Contacts|Контакти
+Wakanda forever Wakanda forever Wakanda forever|Ваканда форевер Ваканда форевер Ваканда форевер
+Register|Реїстрація
+Name|Ім'я
+Email|Емейл
+Password|Пароль
+User|Користувач
+Log in|Увійти
+Register|Зареїструватися
+Log Out|Вийти
+Lesson site|Навчальний сайт
+About MVC|Про MVC
+Not Exists|Не існує
+Contacts|Контакти
+Add|Додати
+Home|Головна
+Add message|Додати повідомлення
+Login|Увійти
+Admin|Aдмин
+Manager|Менеджер
+Profile|Профiль

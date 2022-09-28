@@ -1,0 +1,275 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	margin-bottom: 60px;
+}
+
+.site-footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	background-color: #117a8b
+}
+
+.site-header{
+	background-color: #117a8b;
+	padding: 10px 0;
+}
+
+.site-nav{
+	background-color: #eee;
+	padding: 5px 0;
+}
+
+.site-content{
+	padding: 10px 0;
+}
+
+ul > li {
+	display: flow-root;
+}
+
+.contacst {
+	color: #000;
+	display: flex;
+	justify-content: space-between;
+}
+
+.navbar {
+	display: flex;
+}
+
+.navtwo {
+	width: 20%;
+
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	flex-direction: row;
+}
+
+.navtwo > * {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 8px 8px;
+}
+
+.navtwoitem {
+	pointer-events: stroke;
+	color: #007BFF;
+}
+
+.logbtn {
+	color: #000;
+	border: #000 solid 2px;
+	padding: 4px 12px;
+	border-radius: 10px;
+	margin-left: 20px;
+
+	transition: .4s ease-in-out;
+}
+
+.logbtn:hover {
+	color: #fff;
+	background-color: #000;
+}
+
+.log {
+	height: 100%;
+}
+
+.flexh__leb {
+	/* meme class name hihihaha */
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.reg {
+	padding: 40px 0px;
+	width: 500px;
+	margin: 0px auto;
+}
+
+.regform {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+label {
+	margin: 15px 0px 10px 0px;
+}
+
+.submit__btn {
+	margin-top: 20px;
+}
+
+.form-edit {
+	font-weight: bold;
+}
+
+.users {
+	margin: 0px;
+	width: 100%;
+}
+
+tr {
+	width: 100%;
+	border: 2px solid #4477be;
+	background: #ccdeff;
+}
+
+td, th {
+	padding: 15px 10px;
+	border: 2px solid #4477be;
+	text-align: center;
+}
+
+tr:nth-child(2n) {
+	background: #ccffff;
+}
+
+.btn {
+	color: #fff;
+}
+
+.del {
+	border: 2px solid red;
+	background: red;
+}
+
+.del:hover {
+	color: red;
+	background: none;
+}
+
+.up {
+	border: 2px solid green;
+	background: green;
+}
+
+.up:hover {
+	color: green;
+	background: none;
+}
+
+.down {
+	border: 2px solid orangered;
+	background: orangered;
+}
+
+.down:hover {
+	color: orangered;
+	background: none;
+}
+
+.disagree {
+	border: 2px solid yellow;
+	background: yellow;
+}
+
+.disagree:hover {
+	color: yellow;
+	background: none;
+}
+
+.pages {
+	margin: 40px 0px;
+	width: 100%;
+	height: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.pageButton {
+	width: 40px;
+	height: 40px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	text-align: center;
+	background: #4477be;
+	color: #fff;
+	border: 2px solid #4477be;
+	transition: .4s ease-in-out;
+}
+
+.pageButton:hover {
+	color: #000;
+	background: none;
+}
+
+.controButton {
+	padding: 5px 10px;
+	border-radius: 5px;
+	text-align: center;
+	background: #4477be;
+	color: #fff;
+	border: 2px solid #4477be;
+	transition: .4s ease-in-out;
+}
+
+.controButton:hover {
+	color: #000;
+	background: none;
+}
+
+.control {
+	padding-bottom: 20px;
+}
+
+.changeForm {
+	padding: 20px 0;
+}
+
+.admin {
+	background: #4477be;
+	color: white;
+	border-radius: 5px;
+}
+
+.manager {
+	background: #7f44be;
+	color: white;
+	border-radius: 5px;
+}
+
+.changeForm {
+	width: 300px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-radius: 10px;
+	border: 1px solid #4477be;
+	text-align: center;
+	margin: 40px 0;
+}
+
+.changeForm > button {
+	color: white;
+	border-radius: 5px;
+	border: 2px solid #4477be;
+	background: #4477be;
+	transition: .4s ease-in-out;
+}
+
+.changeForm > label {
+	margin: 0;
+}
+
+.changeForm > button:hover {
+	background: none;
+	color: #4477be;
+}
