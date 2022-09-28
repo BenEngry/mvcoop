@@ -61,11 +61,11 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?= $data[3] === $_SESSION['user_data']["name"]; ?>
-                    <?= $_SESSION['user_data']["name"]; ?>
-                    <?php if(!$data[3] == $_SESSION['user_data']["name"]): ?>
+<!--                    --><?//= $data[3] === $_SESSION['user_data']["name"]; ?>
+<!--                    --><?//= $_SESSION['user_data']["name"]; ?>
+<!--                    --><?php //if(!$data[3] == $_SESSION['user_data']["name"]): ?>
                     <button data-id=<?=$data[0]?> data-type="del" class="del btn"> X </button>
-                    <?php endif; ?>
+<!--                    --><?php //endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
