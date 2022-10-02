@@ -240,10 +240,18 @@ tr:nth-child(2n) {
 	border-radius: 5px;
 }
 
+.admin::before {
+	content: "admin : ";
+}
+
 .manager {
 	background: #7f44be;
 	color: white;
 	border-radius: 5px;
+}
+
+.manager::before {
+	content: "manager : ";
 }
 
 .changeForm {

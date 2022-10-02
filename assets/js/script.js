@@ -146,8 +146,7 @@ changePass.addEventListener("click", (e) => {
                     dataType : "json",
                     success : function (data) {
                         if(data.status) {
-                            console.log("work")
-                            // location.reload();
+                            location.reload();
                         }
                     }
                 })
@@ -237,6 +236,61 @@ adminButtons.forEach(item => {
         })
     })
 })
+
+const promotionView = () => {
+    return `
+    <form method="POST" class="changeForm">
+        <legend>Describe why are u need this promotion:</legend>
+        <label for="desc">Enter pass:</label><br>
+        <input id="desc" type="text" name="desc" placeholder="Describe here"><br>
+        <button type="submit" id="changeSubmit" data-type="promotion">Send</button>
+    </form>
+`
+};
+
+const promotionBtn = document.querySelector("#promotion");
+
+
+promotionBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const forms = document.querySelector(".forms");
+    if (document.querySelector(".changeForm")) {
+        forms.innerHTML = "";
+    } else {
+        forms.innerHTML = promotionView();
+
+        const changeSubmitBtn = document.querySelector("#changeSubmit");
+
+        changeSubmitBtn.addEventListener("click", e => {
+            e.preventDefault();
+
+            const id = document.querySelector(".infoUser").dataset.id;
+            const type = changeSubmitBtn.dataset.type;
+            const desc = document.querySelector("#desc").value;
+
+            const data = {
+                type : type,
+                id : id,
+                desc : desc
+            };
+
+            $.ajax({
+                url: "http://nmvc.site/profile",
+                method: "POST",
+                data : data,
+                dataType : "json",
+                success : function (data) {
+                    if(data.status) {
+                        console.log("work")
+                        // location.reload();
+                    }
+                }
+            })
+        });
+
+    }
+
+});
 
 
 // const register = document.querySelector("#register");

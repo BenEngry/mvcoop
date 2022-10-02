@@ -33,7 +33,8 @@ class Authorization
             $_SESSION['user_data'] = [
                 "name" => $fields['name'],
                 "email" => $fields['email'],
-                "role" => $customer['role']
+                "role" => $customer['role'],
+                "id" => $customer['id']
             ];
             return true;
         } else {
@@ -56,6 +57,7 @@ class Authorization
             "email" => $fields['email'],
             "password" => $fields['password'],
             "role" => "0" //TODO change role by db
+
         ];
         return is_bool($result)? $result : false;
     }

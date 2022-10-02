@@ -1,5 +1,5 @@
 
-        <div class="infoUser">
+        <div class="infoUser" data-id="<?= $_SESSION['user_data']["id"] ?>">
             <p id="login" data-login="<?= $_SESSION['user_data']["name"] ?>">
                 <?=__("Name")?> : <?= $_SESSION['user_data']["name"] ?>
             </p>
@@ -61,11 +61,11 @@
                     <?php endif; ?>
                 </td>
                 <td>
-<!--                    --><?//= $data[3] === $_SESSION['user_data']["name"]; ?>
-<!--                    --><?//= $_SESSION['user_data']["name"]; ?>
-<!--                    --><?php //if(!$data[3] == $_SESSION['user_data']["name"]): ?>
+                    <?php if($_SESSION['user_data']["name"] !== $data[2]): ?>
                     <button data-id=<?=$data[0]?> data-type="del" class="del btn"> X </button>
-<!--                    --><?php //endif; ?>
+                    <?php else: ?>
+                    <p>it is you</p>
+                    <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
