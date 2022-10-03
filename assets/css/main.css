@@ -174,12 +174,12 @@ tr:nth-child(2n) {
 }
 
 .disagree {
-	border: 2px solid yellow;
-	background: yellow;
+	border: 2px solid #f3a13b;
+	background: #f3a13b;
 }
 
 .disagree:hover {
-	color: yellow;
+	color: #f3a13b;
 	background: none;
 }
 

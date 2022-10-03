@@ -39,9 +39,9 @@
             <?php
             $roleclass = "user";
 
-            if($data[4] == 1) {
+            if($data[3] == 1) {
                 $roleclass = "admin";
-            } elseif ($data[4] == 2) {
+            } elseif ($data[3] == 2) {
                 $roleclass = "manager";
             } else {
                 $roleclass = "user";
@@ -49,18 +49,27 @@
             ?>
 
             <tr>
-                <td><?=__("Name")?> : <pre class="<?= $roleclass ?>"><?= $data[3] ?></pre></td>
-                <td><?=__("Email")?> : <?= $data[1] ?></td>
-                <td><?=__("Role")?> : <?= $data[4] ?></td>
+                <td><?=__("Name")?> : <pre class="<?= $roleclass ?>"><?= $data[1] ?></pre></td>
+                <td><?=__("Email")?> : <?= $data[2] ?></td>
+                <td><?=__("Role")?> : <?= $data[3] ?></td>
                 <td>
                     <button data-id=<?=$data[0]?> data-type="up" class="up btn" value="up <?= $row?> "> up </button>
                     <button data-id=<?=$data[0]?>  data-type="down" class="down btn" value="down <?= $row?>"> down </button>
                 </td>
-                <td>
-
+                <td class="decs">
+                    <?php if($data[6] == "consider"): ?>
+                        <div><?= $data[5] ?></div>
+                        <div><?= $data[4] ?></div>
+                        <div>
+                            <button data-id=<?=$data[0]?> data-type="up" class="up btn" value="up <?= $row?> "> Promote </button>
+                            <button data-id=<?=$data[0]?> data-type="declain" class="disagree btn"> Declain </button>
+                        </div>
+                    <?php else: ?>
+                        <p>none</p>
+                    <?php endif; ?>
                 </td>
                 <td>
-                    <?php if($_SESSION['user_data']["name"] !== $data[2]): ?>
+                    <?php if($_SESSION['user_data']["name"] !== $data[1]): ?>
                     <button data-id=<?=$data[0]?> data-type="del" class="del btn"> X </button>
                     <?php else: ?>
                     <p>it is you</p>

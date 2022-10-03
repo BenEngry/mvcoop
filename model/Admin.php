@@ -25,8 +25,8 @@ class Admin
     public function getPageUsers($page): array
     {
         $offset = 10 * $page - 10;
-//        SELECT `id`, `email`, `login`, `role`, `desc`, `sended_at`, `status` FROM `users` u LEFT JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET 10;
-        $queryString = 'SELECT * FROM users LIMIT 10 OFFSET ' . $offset . ';';   // offset limit
+//        SELECT `id`, `login`, `email`, `role`, `desc`, `sended_at`, `status` FROM `users` u LEFT JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET 10;
+        $queryString = 'SELECT `id`, `login`, `email`, `role`, `desc`, `sended_at`, `status` FROM `users` u LEFT JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET ' . $offset . ';';   // offset limit
         $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
         $customer = mysqli_fetch_all($result);
 
@@ -68,5 +68,13 @@ class Admin
         }
         return [ "status" => false ];
 
+    }
+
+    public function declainPromotion($id)
+    {
+        $query = "UPDATE `promotions` SET status = 'declain' WHERE id_user = '%s';";
+        $queryString = sprintf($query, $id);
+        mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
+        return [ "status" => true ];
     }
 }

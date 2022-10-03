@@ -25,6 +25,9 @@ if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["H
     if ($fields["type"] === "up" or $fields["type"] === "down") {
         echo json_encode($admin->updateRole($fields["type"], $fields["id"]));
     }
+    if ($fields["type"] === "declain") {
+        echo json_encode($admin->declainPromotion($fields["id"]));
+    }
     if ($fields["type"] === "password" or $fields["type"] === "email") {
         echo json_encode($user->changeUserData($fields["type"], $fields["login"], $fields["enteredpassword"], $fields["newpassword"]));
     }

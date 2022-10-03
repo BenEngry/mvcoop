@@ -60,9 +60,6 @@ class User
 
     public function getPromotion($id, $desc)
     {
-//        TODO create switcher for type in profile for get promotion
-//        TODO create promote function and change user table, u have other table;
-
         $status = $this->checkForPromotion($id);
 
         if ($status) {
