@@ -229,7 +229,6 @@ adminButtons.forEach(item => {
             dataType : "json",
             success : function (data) {
                 if(data.status) {
-                    console.log("work")
                     location.reload();
                 }
             }
@@ -280,9 +279,8 @@ promotionBtn.addEventListener("click", (e) => {
                 data : data,
                 dataType : "json",
                 success : function (data) {
-                    if(data.status) {
-                        console.log("work")
-                        // location.reload();
+                    if(!data.status) {
+                        alert("Your promotion on consider.");
                     }
                 }
             })

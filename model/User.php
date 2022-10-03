@@ -43,13 +43,38 @@ class User
         return ["status" => false];
     }
 
+    public function checkForPromotion($id)
+    {
+        $query = "SELECT `status` FROM `promotions` WHERE `id_user` = '%s';";
+        $queryString = sprintf($query, $id);
+        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
+        $customer = mysqli_fetch_assoc($result);
+
+        if ($customer["status"] == "consider") {
+            return true;
+        }
+
+        return false;
+
+    }
+
     public function getPromotion($id, $desc)
     {
-
 //        TODO create switcher for type in profile for get promotion
 //        TODO create promote function and change user table, u have other table;
 
-        return [ "status" => false ];
+        $status = $this->checkForPromotion($id);
+
+        if ($status) {
+            return ["status" => false];
+        }
+
+        $Validedesc = str_replace("'", "_", $desc);
+        $query = "INSERT INTO `promotions` (`id_user`, `desc`, `status`) VALUES('%s', '%s', 'consider');";
+        $queryString = sprintf($query, $id, $Validedesc);
+        mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
+
+        return ["status" => true];
     }
 
 }

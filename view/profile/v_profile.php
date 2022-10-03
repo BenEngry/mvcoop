@@ -32,6 +32,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Promotion</th>
+                <th>Describtion</th>
                 <th>Delete</th>
             </tr>
             <?php foreach($admin->getPageUsers(isset($_GET["p"]) ? $_GET["p"] : 1) as $row => $data): ?>
@@ -52,13 +53,11 @@
                 <td><?=__("Email")?> : <?= $data[1] ?></td>
                 <td><?=__("Role")?> : <?= $data[4] ?></td>
                 <td>
-                    <?php if($data[5] > 0): ?>
-                        <button data-id=<?=$data[0]?> data-type="up" class="up btn" value="up <?= $row?> "> up </button>
-                        <button data-id=<?=$data[0]?> data-type="disagree" class="disagree btn" value="disagree <?= $row?>"> dis </button>
-                    <?php else: ?>
                     <button data-id=<?=$data[0]?> data-type="up" class="up btn" value="up <?= $row?> "> up </button>
                     <button data-id=<?=$data[0]?>  data-type="down" class="down btn" value="down <?= $row?>"> down </button>
-                    <?php endif; ?>
+                </td>
+                <td>
+
                 </td>
                 <td>
                     <?php if($_SESSION['user_data']["name"] !== $data[2]): ?>

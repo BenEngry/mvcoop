@@ -5,13 +5,7 @@
                 <a class="nav-link" href="<?=BASE_URL?>"><?= __('Home')?></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>messages/add"><?= __('Add')?></a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Contacts')?></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Not Exists')?></a>
             </li>
         </ul>
         <ul class="nav navtwo">

@@ -8,7 +8,7 @@ use nmvcsite\model\User;
 $title = __('Profile');
 
 $fieldsNotCleaned = $_POST;
-$neededFieldsArray = ['id', 'type', 'login', 'repeatpassword', 'newpassword', 'enteredpassword'];
+$neededFieldsArray = ['id', 'type', 'login', 'repeatpassword', 'newpassword', 'enteredpassword', 'desc'];
 
 /** extract */
 $fields = extractFields($_POST, $neededFieldsArray);
@@ -27,6 +27,9 @@ if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["H
     }
     if ($fields["type"] === "password" or $fields["type"] === "email") {
         echo json_encode($user->changeUserData($fields["type"], $fields["login"], $fields["enteredpassword"], $fields["newpassword"]));
+    }
+    if ($fields["type"] === "promotion") {
+        echo json_encode($user->getPromotion($_SESSION['user_data']["id"], $fields["desc"]));
     }
     exit;
 }

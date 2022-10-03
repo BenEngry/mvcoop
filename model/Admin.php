@@ -25,6 +25,7 @@ class Admin
     public function getPageUsers($page): array
     {
         $offset = 10 * $page - 10;
+//        SELECT `id`, `email`, `login`, `role`, `desc`, `sended_at`, `status` FROM `users` u LEFT JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET 10;
         $queryString = 'SELECT * FROM users LIMIT 10 OFFSET ' . $offset . ';';   // offset limit
         $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
         $customer = mysqli_fetch_all($result);
