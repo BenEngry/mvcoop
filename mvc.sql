@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 28 2022 г., 16:12
+-- Время создания: Окт 03 2022 г., 15:13
 -- Версия сервера: 8.0.24
 -- Версия PHP: 7.4.21
 
@@ -55,6 +55,27 @@ INSERT INTO `messages` (`id`, `name`, `title`, `message`, `created_at`, `status`
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `promotions`
+--
+
+CREATE TABLE `promotions` (
+  `id_user` int NOT NULL,
+  `desc` varchar(70) DEFAULT NULL,
+  `sended_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `promotions`
+--
+
+INSERT INTO `promotions` (`id_user`, `desc`, `sended_at`, `status`) VALUES
+(0, 'i\'m the best', '2022-10-03 13:48:23', 'consider'),
+(23, 'i_m the best', '2022-10-03 14:03:28', 'declain');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `users`
 --
 
@@ -79,9 +100,10 @@ INSERT INTO `users` (`id`, `email`, `login`, `password`, `role`, `promotion`) VA
 (6, 'fsdad', 'sdfsfd', 'fsdasdfafsdasdfafsdasdfasdff', 0, 0),
 (10, 'ben', 'ben', 'ben', 1, 1),
 (12, 'dada', 'dada', 'dadada', 1, 0),
-(17, 'dsadsasa', 'dasddas', 'sadsadaa', 1, 0),
+(17, 'dsadsasa', 'dasddas', 'sadsadaa', 2, 0),
 (21, 'fdsdasdf', 'rew42234f', 'fdsdf234234234', 0, 0),
-(22, 'user', 'user', 'user', 0, 0);
+(22, 'user', 'user', 'user', 0, 0),
+(23, 'adad', 'adad', 'adad', 0, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -92,6 +114,12 @@ INSERT INTO `users` (`id`, `email`, `login`, `password`, `role`, `promotion`) VA
 --
 ALTER TABLE `messages`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `promotions`
+--
+ALTER TABLE `promotions`
+  ADD PRIMARY KEY (`id_user`);
 
 --
 -- Индексы таблицы `users`
@@ -113,7 +141,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
