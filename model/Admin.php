@@ -77,4 +77,17 @@ class Admin
         mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
         return [ "status" => true ];
     }
+
+    public function getAllPromotions()
+    {
+        $query = "SELECT `login`, `desc`, `sended_at`, `status` FROM `users` u JOIN `promotions` p ON u.id = p.id_user;";
+        $result = mysqli_query($this->connect, $query) or die(mysqli_error($this->connect));
+        $list = '';
+
+        while ($data = mysqli_fetch_assoc($result)) {
+            echo "<tr><td>" . $data["login"] . "</td>" . "<td>" . $data["desc"] . "</td>" . "<td>" . $data["sended_at"] . "<td>" . $data["status"] . "</td></tr>";
+        }
+
+        echo json_encode($list);
+    }
 }

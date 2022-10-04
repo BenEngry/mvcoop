@@ -139,6 +139,10 @@ tr:nth-child(2n) {
 	background: #ccffff;
 }
 
+table {
+	width: 100%;
+}
+
 .btn {
 	color: #fff;
 }

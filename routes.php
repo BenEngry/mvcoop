@@ -41,6 +41,10 @@ return (function(){
         [
             'regex' => '/^profile$/',
             'controller' => 'profile/profile'
+        ],
+        [
+            'regex' => '/^promotions$/',
+            'controller' => 'promotions/promotions'
         ]
     ];
 })();

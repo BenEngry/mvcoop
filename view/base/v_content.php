@@ -16,6 +16,8 @@
                 <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Contacts')?></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="<?=BASE_URL?>promotions"><?= __('Promotions')?></a>
+            </li>
                 <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Not Exists')?></a>
             </li>
         </ul>
