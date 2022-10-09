@@ -14,7 +14,7 @@ $neededFieldsArray = ['id', 'type', 'login', 'repeatpassword', 'newpassword', 'e
 $fields = extractFields($_POST, $neededFieldsArray);
 /**  validate */
 
-$admin = new Admin($connect);
+$admin = new Admin($connect, $pdo);
 $user = new User($connect);
 
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {

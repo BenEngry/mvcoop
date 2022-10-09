@@ -84,6 +84,7 @@
             <?php endforeach; ?>
         </div>
         <?php endif; ?>
+        <?= $admin->testPDO(); ?>
         </main>
     </div>
 </div>
