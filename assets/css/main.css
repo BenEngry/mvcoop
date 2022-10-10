@@ -147,6 +147,10 @@ table {
 	color: #fff;
 }
 
+.btn:not(:last-child) {
+	margin-right: 15px;
+}
+
 .del {
 	border: 2px solid red;
 	background: red;

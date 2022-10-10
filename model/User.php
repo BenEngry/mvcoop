@@ -5,22 +5,24 @@ namespace nmvcsite\model;
 class User
 {
     public $connect;
+    public $pdo;
 
-    public function __construct($connect)
+    public function __construct($connect, $pdo)
     {
         $this->connect = $connect;
+        $this->pdo = $pdo;
     }
 
     public function checkPassword($login, $enteredPassword)
     {
-        $query = "SELECT password FROM users WHERE login = '%s';";
-        $queryString = sprintf($query, $login);
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
-        $customer = mysqli_fetch_assoc($result);
+        $stmt = $this->pdo->prepare("SELECT password FROM users WHERE login = :login");
+        $stmt->execute(["login" => $login]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
 
         if ($customer["password"] === $enteredPassword) {
             return true;
         }
+        
         return false;
     }
 
@@ -30,14 +32,15 @@ class User
             $query = "";
             switch ($type) {
                 case "password":
-                    $query = "UPDATE `users` SET `password`= '%s' WHERE `login` = '%s';";
+                    $query = "UPDATE `users` SET `password`= :newData WHERE `login` = :login";
                     break;
                 case "email":
-                    $query = "UPDATE `users` SET `email`= '%s' WHERE `login` = '%s';";
+                    $query = "UPDATE `users` SET `email`= :newData WHERE `login` = :login";
                     break;
             }
-            $queryString = sprintf($query, $newData, $login);
-            mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute(["login" => $login, "newData" => $newData]);
+
             return ["status" => true];
         }
         return ["status" => false];
@@ -45,17 +48,16 @@ class User
 
     public function checkForPromotion($id)
     {
-        $query = "SELECT `status` FROM `promotions` WHERE `id_user` = '%s';";
-        $queryString = sprintf($query, $id);
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
-        $customer = mysqli_fetch_assoc($result);
+
+        $stmt = $this->pdo->prepare("SELECT `status` FROM `promotions` WHERE `id_user` = :id");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
 
         if ($customer["status"] == "consider") {
             return true;
         }
 
         return false;
-
     }
 
     public function getPromotion($id, $desc)
@@ -66,10 +68,8 @@ class User
             return ["status" => false];
         }
 
-        $Validedesc = str_replace("'", "_", $desc);
-        $query = "INSERT INTO `promotions` (`id_user`, `desc`, `status`) VALUES('%s', '%s', 'consider');";
-        $queryString = sprintf($query, $id, $Validedesc);
-        mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
+        $stmt = $this->pdo->prepare("INSERT INTO `promotions` (`id_user`, `desc`, `status`) VALUES(':id', ':desc', ':status')");
+        $stmt->execute(["id" => $id, "desc" => str_replace("'", "_", $desc), "status" => "consider"]);
 
         return ["status" => true];
     }

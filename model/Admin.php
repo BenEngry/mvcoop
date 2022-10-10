@@ -14,87 +14,122 @@ class Admin
         $this->pdo = $pdo;
     }
 
-    public function getPageUsers($page): array
+    public function getPageUsers($page, $lim = 10)
     {
-        $offset = 10 * $page - 10;
-//        SELECT `id`, `login`, `email`, `role`, `desc`, `sended_at`, `status` FROM `users` u LEFT JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET 10;
-        $queryString = 'SELECT `id`, `login`, `email`, `role`, `desc`, `sended_at`, `status` FROM `users` u LEFT JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET ' . $offset . ';';   // offset limit
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
-        $customer = mysqli_fetch_all($result);
+        $stmt = $this->pdo->prepare("CALL getUsersPage(:page, :limit)");
+        $stmt->execute(["page" => $page, "limit" => $lim]);
+        while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
 
-        return $customer;
+            if($row['role'] == 1) {
+                $roleclass = "admin";
+            } elseif ($row['role'] == 2) {
+                $roleclass = "manager";
+            } else {
+                $roleclass = "user";
+            }
+
+            if($row["status"] == "consider") {
+                $desc = "<div>". $row["sended_at"] . "</div>" .
+                        "<div>\"" . $row["desc"] . "\"</div>" .
+                        "<div>" .
+                            "<button data-id" . $row['id'] . " data-type='up' class='up btn'>Promote</button>" .
+                            "<button data-id" . $row['id'] . " data-type='declain' class='disagree btn'>Declain</button>" .
+                        "</div>";
+            } else {
+                $desc = "none";
+            }
+
+            if($_SESSION['user_data']["name"] !== $row["login"]) {
+                $delBtn = "<button data-id=" . $row['id'] . "data-type='del' class='del btn'> X </button>";
+            } else {
+                $delBtn = "it's you :)";
+            }
+
+            echo "<tr>" .
+                    "<td>" . __('Name') . ":<pre class='" . $roleclass . "'>" . $row['login'] . "</pre>" . "</td>" .
+                    "<td>" . __('Email') . ":" . $row["email"] . "</td>" .
+                    "<td>" . __('Role') . ":" . $row["role"] . "</td>" .
+                    "<td>" .
+                        "<button data-id='" . $row["id"] . "' data-type='up' class='up btn'>up</button>" .
+                        "<button data-id='" . $row["id"] . "' data-type='down' class='down btn'>down</button>" .
+                    "</td>" .
+                    "<td class='decs'>" . $desc . "</td>" .
+                    "<td>" . $delBtn . "</td>" .
+                 "</tr>";
+        }
     }
 
     public function  getNumPages(): int
     {
-        $queryString = "SELECT count(*) as count FROM users";
+        $stmt = $this->pdo->prepare("SELECT count(*) as count FROM users");
+        $stmt->execute();
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
 
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
-        $customer = mysqli_fetch_assoc($result);
-        $pages = ceil($customer["count"] / 10);
-        return $pages;
+        return ceil($customer["count"] / 10);
     }
 
     public function updateRole($type, $id)
     {
         $type = $type === "up" ? 1 : -1;
-        $queryString = "SELECT role FROM users WHERE id = $id;";
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
-        $customer = mysqli_fetch_assoc($result);
+
+        $stmt = $this->pdo->prepare("SELECT role FROM users WHERE id = :id");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+
 
         if((int)$customer["role"] + $type < 0 or (int)$customer["role"] + $type > 2) {
             return [ "status" => false ];
         }
 
-        $queryString = "UPDATE `users` SET role = role + $type WHERE id = $id;";
-        mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
+        $stmt = $this->pdo->prepare("UPDATE `users` SET role = role + :type WHERE id = :id;");
+        $stmt->execute(["type" => $type,"id" => $id]);
+
         return [ "status" => true ];
     }
 
     public function delUser($type, $id)
     {
         if ($type === "del") {
-            $queryString = "DELETE FROM users WHERE id = $id;";
-            mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
+            $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
+            $stmt->execute(["id" => $id]);
             return [ "status" => true ];
         }
         return [ "status" => false ];
 
     }
 
+    // TODO Якогось хуя не працюють запроси на підвищення
+
+
     public function declainPromotion($id)
     {
-        $query = "UPDATE `promotions` SET status = 'declain' WHERE id_user = '%s';";
-        $queryString = sprintf($query, $id);
-        mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
+        $stmt = $this->pdo->prepare("UPDATE `promotions` SET status = 'declain' WHERE id_user = ?;");
+        $stmt->execute(["$id"]);
         return [ "status" => true ];
     }
 
     public function  getNumPromotionsPages()
     {
-        $queryString = 'SELECT count(*) as count FROM `promotions`';
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
-        $customer = mysqli_fetch_assoc($result);
-        $pages = ceil($customer["count"] / 10);
+        $stmt = $this->pdo->prepare("SELECT CEIL(COUNT(*)/ 10) as count FROM `promotions`");
+        $stmt->execute();
 
-        for($i = 1; $i <= $pages; $i++) {
+        for($i = 1; $i <= $stmt; $i++) {
             echo '<a class="pageButton" href="/promotions?p='. $i .'">' . $i . '</a>';
         }
     }
 
     public function getAllPromotions($page)
     {
-        $offset = 10 * $page - 10;
-        $query = "SELECT `id`, `login`, `desc`, `sended_at`, `status` FROM `users` u JOIN `promotions` p ON u.id = p.id_user LIMIT 10 OFFSET " . $offset . ";";
-        $result = mysqli_query($this->connect, $query) or die(mysqli_error($this->connect));
+        $stmt = $this->pdo->prepare("CALL getPromotionPage(:page)");
+        $stmt->execute(["page" => $page]);
 
-        while ($data = mysqli_fetch_assoc($result)) {
+        while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
             return "<tr>" .
-                "<td>" . $data["id"] . "</td>" .
-                "<td>" . $data["login"] . "</td>" .
-                "<td>" . $data["desc"] . "</td>" .
-                "<td>" . $data["sended_at"] . "</td>" .
-                "<td>" . $data["status"] . "</td>" .
+                "<td>" . $row["id"] . "</td>" .
+                "<td>" . $row["login"] . "</td>" .
+                "<td>" . $row["desc"] . "</td>" .
+                "<td>" . $row["sended_at"] . "</td>" .
+                "<td>" . $row["status"] . "</td>" .
 //                "<td><button data-id='" . $data[0] . "' data-type='delpr' class='down btn'> delete </button>" .  "</td>" .
                 "</tr>";
         }

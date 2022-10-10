@@ -15,7 +15,7 @@ $fields = extractFields($_POST, $neededFieldsArray);
 /**  validate */
 
 $admin = new Admin($connect, $pdo);
-$user = new User($connect);
+$user = new User($connect, $pdo);
 
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
