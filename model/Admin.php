@@ -98,13 +98,10 @@ class Admin
 
     }
 
-    // TODO Якогось хуя не працюють запроси на підвищення
-
-
     public function declainPromotion($id)
     {
         $stmt = $this->pdo->prepare("UPDATE `promotions` SET status = 'declain' WHERE id_user = ?;");
-        $stmt->execute(["$id"]);
+        $stmt->execute([$id]);
         return [ "status" => true ];
     }
 
@@ -124,17 +121,14 @@ class Admin
         $stmt->execute(["page" => $page]);
 
         while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
-            return "<tr>" .
-                "<td>" . $row["id"] . "</td>" .
-                "<td>" . $row["login"] . "</td>" .
-                "<td>" . $row["desc"] . "</td>" .
-                "<td>" . $row["sended_at"] . "</td>" .
-                "<td>" . $row["status"] . "</td>" .
-//                "<td><button data-id='" . $data[0] . "' data-type='delpr' class='down btn'> delete </button>" .  "</td>" .
+            echo "<tr>" .
+                    "<td>" . $row["id"] . "</td>" .
+                    "<td>" . $row["login"] . "</td>" .
+                    "<td>" . $row["desc"] . "</td>" .
+                    "<td>" . $row["sended_at"] . "</td>" .
+                    "<td>" . $row["status"] . "</td>" .
                 "</tr>";
         }
-
-        return [ "status" => true ];
     }
 
     public function testPDO() {

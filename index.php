@@ -39,7 +39,7 @@ if(strpos($uri, $badUrl) === 0){
 }
 
 $mes = new Messagess($connect);
-$auth = new Authorization($connect);
+$auth = new Authorization($connect, $pdo);
 
 /** @var string $path */
 $path = "controller/$cname.php";

@@ -3,10 +3,12 @@
 class Authorization
 {
     public $connect;
+    public $pdo;
 
-    public function __construct($connect)
+    public function __construct($connect, $pdo)
     {
         $this->connect = $connect;
+        $this->pdo = $pdo;
     }
 
     public function loginValidate(array &$fields) : array{
@@ -15,12 +17,9 @@ class Authorization
     }
 
     public function checkUser($fields) : bool {
-
-        $querry = 'SELECT * FROM users WHERE login="%s";';
-        $queryString = sprintf($querry, $fields['name']);
-
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($connect));
-        $customer = mysqli_fetch_assoc($result);
+        $stmt = $this->pdo->prepare("SELECT * FROM `users` WHERE login = :log");
+        $stmt->execute(["log" => $fields['name']]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
 
         if (!$customer) {
             $_SESSION["log"] = "undefinded data";
@@ -48,17 +47,23 @@ class Authorization
         return $errors;
     }
 
-    public function setUser($fields) : bool {
-        $querry = "INSERT into users VALUES (null, '%s', '%s', '%s', '0', '0');";
-        $queryString = sprintf($querry, $fields['email'], $fields['name'], $fields['password']);
-        $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
+    public function setUser($fields)  {
+
+        $stmt = $this->pdo->prepare("INSERT into users VALUES (null, :email, :login, :password, :role, :promotion)");
+        $stmt->execute([
+            "email" => $fields['email'],
+            "login" => $fields['name'],
+            "password" => $fields['password'],
+            "role" => 0,
+            "promotion" => 0,
+        ]);
+
         $_SESSION['user_data'] = [
             "name" => $fields['name'],
             "email" => $fields['email'],
-            "password" => $fields['password'],
             "role" => "0" //TODO change role by db
 
         ];
-        return is_bool($result)? $result : false;
+        return ["status" => true];
     }
 }

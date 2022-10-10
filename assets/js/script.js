@@ -195,8 +195,7 @@ changeEmail.addEventListener("click", (e) => {
                     dataType : "json",
                     success : function (data) {
                         if(data.status) {
-                            console.log("work")
-                            // location.reload();
+                            location.reload();
                         }
                     }
                 })
@@ -281,6 +280,9 @@ promotionBtn.addEventListener("click", (e) => {
                 success : function (data) {
                     if(!data.status) {
                         alert("Your promotion on consider.");
+                    }
+                    if(data.status) {
+                        alert("Your promotion is sended!");
                     }
                 }
             })

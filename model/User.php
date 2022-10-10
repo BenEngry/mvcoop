@@ -22,7 +22,7 @@ class User
         if ($customer["password"] === $enteredPassword) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -68,7 +68,7 @@ class User
             return ["status" => false];
         }
 
-        $stmt = $this->pdo->prepare("INSERT INTO `promotions` (`id_user`, `desc`, `status`) VALUES(':id', ':desc', ':status')");
+        $stmt = $this->pdo->prepare("INSERT INTO `promotions` (`id_user`, `desc`, `status`) VALUES(:id, :desc, :status)");
         $stmt->execute(["id" => $id, "desc" => str_replace("'", "_", $desc), "status" => "consider"]);
 
         return ["status" => true];
