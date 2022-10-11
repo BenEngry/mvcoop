@@ -135,7 +135,7 @@ class Admin
     public function pagination($pagesCount, $url)
     {
         foreach(range(1, $pagesCount) as $number) {
-            echo "<a class='pageButton' href='/" . $url . "?p=" . $number . "'>" . $number . "</a>";
+            echo "<a class='pageButton " . ($_GET["p"] == $number ? "pageButtonCurrent" : "") . "' href='/" . $url . "?p=" . $number . "'>" . $number . "</a>";
         }
     }
 
@@ -185,6 +185,9 @@ class Admin
                     "</td>" .
                     "<td class='" . ($row["loginingToPage"] ? "opporTrue" : "opporFalse") . "'>" .
                         ($row["loginingToPage"] ? "+" : "-") .
+                    "</td>" .
+                    "<td>" .
+                        "<input type='checkbox' name='user' value='" . $row['id'] . "'>" .
                     "</td>" .
                 "</tr>";
         }

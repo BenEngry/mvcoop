@@ -214,6 +214,11 @@ table {
 	transition: .4s ease-in-out;
 }
 
+.pageButtonCurrent {
+	background: #7144be;
+	border: 2px solid #7144be;
+}
+
 .pageButton:hover {
 	color: #000;
 	background: none;
