@@ -16,7 +16,7 @@
     <?= $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1) ?>
 </table>
 <div class="pages">
-    <?php foreach(range(1,$admin->getNumPages()) as $number): ?>
-        <a class="pageButton" href="/opportunity?p=<?= $number ?>"><?=$number?></a>
-    <?php endforeach; ?>
+    <?= $admin->pagination($admin->getNumPages("users"), "opportunity") ?>
 </div>
+
+<!--TODO create function for pagination-->

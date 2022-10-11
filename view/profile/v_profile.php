@@ -38,9 +38,7 @@
             <?= $admin->getPageUsers(isset($_GET["p"]) ? $_GET["p"] : 1)?>
         </table>
         <div class="pages">
-            <?php foreach(range(1,$admin->getNumPages()) as $number): ?>
-                <a class="pageButton" href="/profile?p=<?= $number ?>"><?=$number?></a>
-            <?php endforeach; ?>
+            <?= $admin->pagination($admin->getNumPages("users"), "profile") ?>
         </div>
         <?php endif; ?>
         </main>

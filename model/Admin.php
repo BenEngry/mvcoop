@@ -59,9 +59,10 @@ class Admin
         }
     }
 
-    public function  getNumPages(): int
+    public function  getNumPages($table): int
     {
-        $stmt = $this->pdo->prepare("SELECT count(*) as count FROM users");
+        $querry = "SELECT count(*) as count FROM `$table`";
+        $stmt = $this->pdo->prepare($querry);
         $stmt->execute();
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
 
@@ -128,6 +129,13 @@ class Admin
                     "<td>" . $row["sended_at"] . "</td>" .
                     "<td>" . $row["status"] . "</td>" .
                 "</tr>";
+        }
+    }
+
+    public function pagination($pagesCount, $url)
+    {
+        foreach(range(1, $pagesCount) as $number) {
+            echo "<a class='pageButton' href='/" . $url . "?p=" . $number . "'>" . $number . "</a>";
         }
     }
 
