@@ -45,6 +45,10 @@ return (function(){
         [
             'regex' => '/^promotions$/',
             'controller' => 'promotions/promotions'
+        ],
+        [
+            'regex' => '/^opportunity$/',
+            'controller' => 'opportunity/opportunity'
         ]
     ];
 })();

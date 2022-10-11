@@ -1,6 +1,6 @@
 <nav class="site-nav">
     <div class="container navbar">
-        <ul class="nav">
+        <li class="nav">
             <li class="nav-item">
                 <a class="nav-link" href="<?=BASE_URL?>"><?= __('Home')?></a>
             </li>
@@ -18,9 +18,13 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?=BASE_URL?>promotions"><?= __('Promotions')?></a>
             </li>
+            <li>
                 <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Not Exists')?></a>
             </li>
-        </ul>
+            <li>
+                <a class="nav-link" href="<?=BASE_URL?>opportunity"><?= __('Oportunity')?></a>
+            </li>
+        </li>
         <ul class="nav navtwo">
             <li class="nav-item navtwoitem"> <?= __('Console') ?> </li>
             <li class="nav-item">   

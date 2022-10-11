@@ -131,15 +131,32 @@ class Admin
         }
     }
 
-    public function testPDO() {
-        $stmt = $this->pdo->prepare("SELECT * FROM `users`;");
-        $stmt->execute();
+    public function getPageOpportunity($page, $lim = 10)
+    {
+        $stmt = $this->pdo->prepare("CALL getUsersOpportunity(:page, :limit)");
+        $stmt->execute(["page" => $page, "limit" => $lim]);
         while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
-            echo $row[0];
-            echo $row[1];
-            echo $row[2];
-            echo $row[3];
-            echo $row[4];
+            if ($row["role"] === 1) {
+                $role = "admin";
+            } elseif ($row["role"] === 2) {
+                $role = "manager";
+            } else {
+                $role = "user";
+            }
+            echo "<tr>" .
+                "<td>" . $row['id'] . "</td>" .
+                "<td>" . $row['login'] . "</td>" .
+                "<td>" . $row["email"] . "</td>" .
+                "<td>" . $role . "</td>" .
+                "<td>" . ($row["delUser"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["promoteUser"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["declineUser"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["delUsersMessages"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["passToLogData"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["promoteUser"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["delOtherAdmins"] ? "+" : "-") . "</td>" .
+                "<td>" . ($row["delOtherManagers"] ? "+" : "-") . "</td>" .
+                "</tr>";
         }
     }
 }

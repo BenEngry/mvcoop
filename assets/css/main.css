@@ -289,3 +289,12 @@ table {
 	background: none;
 	color: #4477be;
 }
+ul, ol, li {
+	list-style-type: none;
+}
+
+.oppor > td, th {
+	max-width: 40px;
+	font-size: 12px;
+	flex-wrap: wrap;
+}
