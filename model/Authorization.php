@@ -47,16 +47,31 @@ class Authorization
         return $errors;
     }
 
-    public function setUser($fields)  {
+    public function ifExistUser($login) {
+        $stmt = $this->pdo->prepare("SELECT `id` FROM `users` WHERE login = :log");
+        $stmt->execute(["log" => $login]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
 
-        $stmt = $this->pdo->prepare("INSERT into users VALUES (null, :email, :login, :password, :role, :promotion)");
-        $stmt->execute([
+        if ($customer["id"]) {
+            return $customer["id"];
+        }
+        return false;
+    }
+
+    public function setUser($fields)  {
+//          creating row for users table and
+//          create new row for opportunity table with the same id
+        $stmtUsers = $this->pdo->prepare("INSERT into users VALUES (null, :email, :login, :password, :role, :promotion)");
+        $stmtUsers->execute([
             "email" => $fields['email'],
             "login" => $fields['name'],
             "password" => $fields['password'],
             "role" => 0,
             "promotion" => 0,
         ]);
+
+        $stmtOpportunity = $this->pdo->prepare("INSERT INTO `opportunity` (idUser) VALUES (:id)");
+        $stmtOpportunity->execute(["id" => $this->ifExistUser($fields["name"])]);
 
         $_SESSION['user_data'] = [
             "name" => $fields['name'],

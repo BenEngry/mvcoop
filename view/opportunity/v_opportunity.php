@@ -12,11 +12,11 @@
         <th>Reduction users messages</th>
         <th>Del other admins</th>
         <th>Del other managers</th>
+        <th>Add comments</th>
+        <th>Login</th>
     </tr>
     <?= $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1) ?>
 </table>
 <div class="pages">
     <?= $admin->pagination($admin->getNumPages("users"), "opportunity") ?>
 </div>
-
-<!--TODO create function for pagination-->

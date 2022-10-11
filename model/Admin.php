@@ -144,26 +144,48 @@ class Admin
         $stmt = $this->pdo->prepare("CALL getUsersOpportunity(:page, :limit)");
         $stmt->execute(["page" => $page, "limit" => $lim]);
         while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
-            if ($row["role"] === 1) {
+            if ($row["role"] === "1") {
                 $role = "admin";
-            } elseif ($row["role"] === 2) {
+            } elseif ($row["role"] === "2") {
                 $role = "manager";
             } else {
                 $role = "user";
             }
             echo "<tr>" .
-                "<td>" . $row['id'] . "</td>" .
-                "<td>" . $row['login'] . "</td>" .
-                "<td>" . $row["email"] . "</td>" .
-                "<td>" . $role . "</td>" .
-                "<td>" . ($row["delUser"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["promoteUser"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["declineUser"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["delUsersMessages"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["passToLogData"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["promoteUser"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["delOtherAdmins"] ? "+" : "-") . "</td>" .
-                "<td>" . ($row["delOtherManagers"] ? "+" : "-") . "</td>" .
+                    "<td>" . $row['id'] . "</td>" .
+                    "<td>" . $row['login'] . "</td>" .
+                    "<td>" . $row["email"] . "</td>" .
+                    "<td>" . $role . "</td>" .
+                    "<td class='" . ($row["delUser"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["delUser"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["promoteUser"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["promoteUser"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["declineUser"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["declineUser"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["delUsersMessages"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["delUsersMessages"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["passToLogData"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["passToLogData"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["promoteUser"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["promoteUser"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["delOtherAdmins"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["delOtherAdmins"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["delOtherManagers"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["delOtherManagers"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["addComments"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["addComments"] ? "+" : "-") .
+                    "</td>" .
+                    "<td class='" . ($row["loginingToPage"] ? "opporTrue" : "opporFalse") . "'>" .
+                        ($row["loginingToPage"] ? "+" : "-") .
+                    "</td>" .
                 "</tr>";
         }
     }
