@@ -1,5 +1,10 @@
 <?php
 
+// delete this later
+require_once('./model/Authorization.php');
+$auth = new Authorization($connect, $pdo);
+
+
 require_once("./model/Admin.php");
 
 use nmvcsite\model\Admin;

@@ -1,3 +1,5 @@
+
+<?= $auth->testXML() ?>
 <select>
 <!--  TODO CREATE OPPORTUNIRT FORM AND ADD XML  -->
     <option>op1</option>

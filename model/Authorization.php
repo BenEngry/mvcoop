@@ -58,7 +58,20 @@ class Authorization
         return false;
     }
 
+    public function testXML()
+    {
+        $xml = simplexml_load_file("./assets/settings/user.xml");
+
+//        foreach ($xml->opporrtunity->admin as $row) {
+//            echo "<p>";
+//            echo $row;
+//            echo "</p>";
+//        }
+        var_dump($xml->opporrtunity->admin);
+    }
+
     public function setUser($fields)  {
+
 //          creating row for users table and
 //          create new row for opportunity table with the same id
         $stmtUsers = $this->pdo->prepare("INSERT into users VALUES (null, :email, :login, :password, :role, :promotion)");

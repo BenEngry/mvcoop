@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <setUser>
+        <user>
+            <role>0</role>
+            <promotion>0</promotion>
+        </user>
+    </setUser>
+    <opporrtunity>
+        <user>
+            <delUser>0</delUser>
+            <promoteUser>0</promoteUser>
+            <declineUser>0</declineUser>
+            <passToLogData>0</passToLogData>
+            <delUsersMessages>0</delUsersMessages>
+            <reductionUsersMessages>0</reductionUsersMessages>
+            <delOtherAdmins>0</delOtherAdmins>
+            <delOtherManagers>0</delOtherManagers>
+            <addComments>1</addComments>
+            <loginingToPage>1</loginingToPage>
+        </user>
+        <admin>
+            <delUser>1</delUser>
+            <promoteUser>1</promoteUser>
+            <declineUser>1</declineUser>
+            <passToLogData>1</passToLogData>
+            <delUsersMessages>1</delUsersMessages>
+            <reductionUsersMessages>1</reductionUsersMessages>
+            <delOtherAdmins>1</delOtherAdmins>
+            <delOtherManagers>1</delOtherManagers>
+            <addComments>1</addComments>
+            <loginingToPage>1</loginingToPage>
+        </admin>
+        <manager>
+            <delUser>1</delUser>
+            <promoteUser>1</promoteUser>
+            <declineUser>1</declineUser>
+            <passToLogData>1</passToLogData>
+            <delUsersMessages>1</delUsersMessages>
+            <reductionUsersMessages>1</reductionUsersMessages>
+            <delOtherAdmins>0</delOtherAdmins>
+            <delOtherManagers>0</delOtherManagers>
+            <addComments>1</addComments>
+            <loginingToPage>1</loginingToPage>
+        </manager>
+    </opporrtunity>
+</root>
