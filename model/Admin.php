@@ -46,7 +46,7 @@ class Admin
             }
 
             echo "<tr>" .
-                    "<td>" . __('Name') . ":<pre class='" . $roleclass . "'>" . $row['login'] . "</pre>" . "</td>" .
+                    "<td>" . __('Name') . ":<pre class='" . $roleclass . "'><a href='" . BASE_URL . "user/id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a></pre>" . "</td>" .
                     "<td>" . __('Email') . ":" . $row["email"] . "</td>" .
                     "<td>" . __('Role') . ":" . $row["role"] . "</td>" .
                     "<td>" .
@@ -190,6 +190,21 @@ class Admin
                         "<input type='checkbox' name='user' value='" . $row['id'] . "'>" .
                     "</td>" .
                 "</tr>";
+        }
+    }
+
+    public function ifExistId($id) {
+//        TODO CREATE FUNCTION FOR CHECK id
+    }
+
+    public function testXML()
+    {
+        $xml = simplexml_load_file("./assets/settings/user.xml");
+
+        foreach ($xml->opporrtunity->user->action as $row) {
+            echo "<p>";
+            echo $row["type"] . " : " . $row;
+            echo "</p>";
         }
     }
 }

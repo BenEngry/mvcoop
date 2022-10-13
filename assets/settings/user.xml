@@ -8,40 +8,40 @@
     </setUser>
     <opporrtunity>
         <user>
-            <delUser>0</delUser>
-            <promoteUser>0</promoteUser>
-            <declineUser>0</declineUser>
-            <passToLogData>0</passToLogData>
-            <delUsersMessages>0</delUsersMessages>
-            <reductionUsersMessages>0</reductionUsersMessages>
-            <delOtherAdmins>0</delOtherAdmins>
-            <delOtherManagers>0</delOtherManagers>
-            <addComments>1</addComments>
-            <loginingToPage>1</loginingToPage>
+            <action type="delUser">0</action>
+            <action type="promoteUser">0</action>
+            <action type="declineUser">0</action>
+            <action type="passToLogData">0</action>
+            <action type="delUsersMessages">0</action>
+            <action type="reductionUsersMessages">0</action>
+            <action type="delOtherAdmins">0</action>
+            <action type="delOtherManagers">0</action>
+            <action type="addComments">1</action>
+            <action type="loginingToPage">1</action>
         </user>
         <admin>
-            <delUser>1</delUser>
-            <promoteUser>1</promoteUser>
-            <declineUser>1</declineUser>
-            <passToLogData>1</passToLogData>
-            <delUsersMessages>1</delUsersMessages>
-            <reductionUsersMessages>1</reductionUsersMessages>
-            <delOtherAdmins>1</delOtherAdmins>
-            <delOtherManagers>1</delOtherManagers>
-            <addComments>1</addComments>
-            <loginingToPage>1</loginingToPage>
+            <action type="delUser">1</action>
+            <action type="promoteUser">1</action>
+            <action type="declineUser">1</action>
+            <action type="passToLogData">1</action>
+            <action type="delUsersMessages">1</action>
+            <action type="reductionUsersMessages">1</action>
+            <action type="delOtherAdmins">1</action>
+            <action type="delOtherManagers">1</action>
+            <action type="addComments">1</action>
+            <action type="loginingToPage">1</action>
         </admin>
         <manager>
-            <delUser>1</delUser>
-            <promoteUser>1</promoteUser>
-            <declineUser>1</declineUser>
-            <passToLogData>1</passToLogData>
-            <delUsersMessages>1</delUsersMessages>
-            <reductionUsersMessages>1</reductionUsersMessages>
-            <delOtherAdmins>0</delOtherAdmins>
-            <delOtherManagers>0</delOtherManagers>
-            <addComments>1</addComments>
-            <loginingToPage>1</loginingToPage>
+            <action type="delUser">1</action>
+            <action type="promoteUser">1</action>
+            <action type="declineUser">1</action>
+            <action type="passToLogData">1</action>
+            <action type="delUsersMessages">1</action>
+            <action type="reductionUsersMessages">1</action>
+            <action type="delOtherAdmins">0</action>
+            <action type="delOtherManagers">0</action>
+            <action type="addComments">1</action>
+            <action type="loginingToPage">1</action>
         </manager>
     </opporrtunity>
 </root>

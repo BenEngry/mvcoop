@@ -313,3 +313,45 @@ ul, ol, li {
 	border: 2px solid #000;
 	background-color: #f61b2d;
 }
+
+.userLink {
+	color: #000;
+	transition: .4s ease-in-out;
+	padding: 10px 5px;
+	border-radius: 10px;
+}
+
+.userLink:hover {
+	color: #fff;
+	background-color: #000;
+}
+
+pre {
+	overflow-y: hidden;
+}
+
+.profile {
+	font-size: 26px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.actions {
+	font-size: 15px;
+	padding: 15px 5px;
+	border-radius: 15px;
+	border: 1px solid #252525;
+	width: 280px;
+	position: relative;
+}
+
+.act {
+	position: absolute;
+	left: 77%;
+	top: 15px;
+	width: 100%;
+	font-size: 20px;
+	text-decoration: underline;
+	text-transform: uppercase;
+}

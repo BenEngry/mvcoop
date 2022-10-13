@@ -49,6 +49,10 @@ return (function(){
         [
             'regex' => '/^opportunity$/',
             'controller' => 'opportunity/opportunity'
+        ],
+        [
+            'regex' => '/^user$/',
+            'controller' => 'user/user'
         ]
     ];
 })();

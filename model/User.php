@@ -74,4 +74,54 @@ class User
         return ["status" => true];
     }
 
+    //TODO create check id func, but in USER.php
+    //TODO create check hidden account, but in USER.php
+
+    public function loadActions($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT idUser, delUser, promoteUser, declineUser, passToLogData, delUsersMessages, reductionUsersMessages, delOtherAdmins, delOtherManagers, addComments, loginingToPage FROM `opportunity` WHERE idUser = :id");
+        $stmt->execute(["id" => 34]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        return <<<HERE
+            <div class="act">Actions</div>
+            <div>Del user: {$customer["delUser"]}</div>
+            <div>Promote user: {$customer["promoteUser"]}</div>
+            <div>Decline user: {$customer["declineUser"]}</div>
+            <div>Pass to logData: {$customer["passToLogData"]}</div>
+            <div>Del users messages: {$customer["delUsersMessages"]}</div>
+            <div>Reduction users messages: {$customer["reductionUsersMessages"]}</div>
+            <div>Del other admins: {$customer["delOtherAdmins"]}</div>
+            <div>Del other managers: {$customer["delOtherManagers"]}</div>
+            <div>Add comments: {$customer["addComments"]}</div>
+            <div>Logining to page: {$customer["loginingToPage"]}</div>
+            HERE;
+
+    }
+
+    public function loadUserPage($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT `id`, `login`, `email`, `role` FROM `users` WHERE id = :id");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        if($customer["login"] === 1) {
+            $role = "admin";
+        } elseif ($customer["login"] === 2) {
+            $role = "manager";
+        } else {
+            $role = "user";
+        }
+        $viewRole = $_SESSION["user_data"]["role"];
+        return <<<HERE
+            <div class="profile">
+                <div class="userInfo">
+                    <h1> $role : {$customer["login"]}</h1>
+                    <div>email : {$customer["email"]}</div>
+                </div>
+                <div class="actions">
+                    {$this->loadActions($id)}
+                </div>
+            </div>
+            HERE;
+
+    }
 }
