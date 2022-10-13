@@ -83,19 +83,31 @@ class User
         $stmt->execute(["id" => 34]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
         return <<<HERE
-            <div class="act">Actions</div>
-            <div>Del user: {$customer["delUser"]}</div>
-            <div>Promote user: {$customer["promoteUser"]}</div>
-            <div>Decline user: {$customer["declineUser"]}</div>
-            <div>Pass to logData: {$customer["passToLogData"]}</div>
-            <div>Del users messages: {$customer["delUsersMessages"]}</div>
-            <div>Reduction users messages: {$customer["reductionUsersMessages"]}</div>
-            <div>Del other admins: {$customer["delOtherAdmins"]}</div>
-            <div>Del other managers: {$customer["delOtherManagers"]}</div>
-            <div>Add comments: {$customer["addComments"]}</div>
-            <div>Logining to page: {$customer["loginingToPage"]}</div>
+            <div class="actions">
+                <p class="act">Actions</p>
+                <div><div>Del user :</div><div>{$customer["delUser"]}</div></div>
+                <div><div>Promote user :</div><div>{$customer["promoteUser"]}</div></div>
+                <div><div>Decline user :</div><div>{$customer["declineUser"]}</div></div>
+                <div><div>Pass to logData :</div><div>{$customer["passToLogData"]}</div></div>
+                <div><div>Del users messages :</div><div>{$customer["delUsersMessages"]}</div></div>
+                <div><div>Reduction users messages :</div><div>{$customer["reductionUsersMessages"]}</div></div>
+                <div><div>Del other admins :</div><div>{$customer["delOtherAdmins"]}</div></div>
+                <div><div>Del other managers :</div><div>{$customer["delOtherManagers"]}</div></div>
+                <div><div>Add comments :</div><div>{$customer["addComments"]}</div></div>
+                <div><div>Logining to page :</div><div>{$customer["loginingToPage"]}</div></div>
+            </div>
             HERE;
+    }
 
+    public function loadStat($id)
+    {
+//        pdo
+//        execute
+        return <<<HERE
+                <div class="statistic">
+                    
+                </div>
+            HERE;
     }
 
     public function loadUserPage($id)
@@ -110,18 +122,11 @@ class User
         } else {
             $role = "user";
         }
-        $viewRole = $_SESSION["user_data"]["role"];
         return <<<HERE
-            <div class="profile">
-                <div class="userInfo">
-                    <h1> $role : {$customer["login"]}</h1>
-                    <div>email : {$customer["email"]}</div>
-                </div>
-                <div class="actions">
-                    {$this->loadActions($id)}
-                </div>
+            <div>
+                <h1> $role : {$customer["login"]}</h1>
+                <div>email : {$customer["email"]}</div>
             </div>
             HERE;
-
     }
 }

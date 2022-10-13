@@ -46,7 +46,7 @@ class Admin
             }
 
             echo "<tr>" .
-                    "<td>" . __('Name') . ":<pre class='" . $roleclass . "'><a href='" . BASE_URL . "user/id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a></pre>" . "</td>" .
+                    "<td>" . __('Name') . ":<pre class='" . $roleclass . "'><a href='" . BASE_URL . "user?id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a></pre>" . "</td>" .
                     "<td>" . __('Email') . ":" . $row["email"] . "</td>" .
                     "<td>" . __('Role') . ":" . $row["role"] . "</td>" .
                     "<td>" .
@@ -153,7 +153,7 @@ class Admin
             }
             echo "<tr>" .
                     "<td>" . $row['id'] . "</td>" .
-                    "<td>" . $row['login'] . "</td>" .
+                    "<td><a href='" . BASE_URL . "user?id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a>" . "</td>" .
                     "<td>" . $row["email"] . "</td>" .
                     "<td>" . $role . "</td>" .
                     "<td class='" . ($row["delUser"] ? "opporTrue" : "opporFalse") . "'>" .

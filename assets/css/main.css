@@ -346,12 +346,39 @@ pre {
 	position: relative;
 }
 
-.act {
+.actions > div {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	z-index: 2;
+}
+
+.actions > div > div {
+	background-color: #fff;
+}
+.actions > div > div:first-child:after {
+	content: "";
 	position: absolute;
-	left: 77%;
-	top: 15px;
+	left: 0;
+	top: 12px;
+	border: none;
+	border-top: 1px dotted #252525;
+	color: #fff;
+	background-color: #fff;
 	width: 100%;
+	height: 3px;
+	z-index: -1;
+}
+
+.act {
+	width: 100px;
+	background: #fff;
+	position: absolute;
+	left: 50%;
+	top: -15px;
 	font-size: 20px;
-	text-decoration: underline;
+	display: flex;
+	justify-content: center;
+	border: 1px solid #252525;
 	text-transform: uppercase;
 }

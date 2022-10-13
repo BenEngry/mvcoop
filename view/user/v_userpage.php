@@ -1,1 +1,7 @@
-<h1> <?= $page ?> </h1>
+<div class="profile">
+    <div class="userInfo">
+        <?= $page ?>
+        <?= $stat ?>
+    </div>
+    <?= $actions ?>
+</div>

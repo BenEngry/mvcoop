@@ -8,6 +8,7 @@ $title = __('User');
 
 $fieldsNotCleaned = $_POST;
 $neededFieldsArray = ['id'];
+$viewRole = $_SESSION["user_data"]["role"];
 
 /** extract */
 $fields = extractFields($_POST, $neededFieldsArray);
@@ -17,11 +18,12 @@ $user = new User($connect, $pdo);
 
 if(isset($_GET["id"]) and $_GET["id"]) {
     $page = $user->loadUserPage($_GET["id"]);
+    $actions = $viewRole ? $user->loadActions($_GET["id"]) : "";
+    $stat = $viewRole > 0 ? $user->loadStat($_GET["id"]) : "";
 }
 
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
-
     exit;
 }
 
