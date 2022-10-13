@@ -53,6 +53,10 @@ return (function(){
         [
             'regex' => '/^user$/',
             'controller' => 'user/user'
+        ],
+        [
+            'regex' => '/^user404$/',
+            'controller' => 'user/user404'
         ]
     ];
 })();

@@ -16,9 +16,13 @@ $fields = extractFields($_POST, $neededFieldsArray);
 
 $user = new User($connect, $pdo);
 
-if(isset($_GET["id"]) and $_GET["id"]) {
+if(isset($_GET["id"]) and strlen($_GET["id"]) > 0) {
     $page = $user->loadUserPage($_GET["id"]);
-    $actions = $viewRole ? $user->loadActions($_GET["id"]) : "";
+    if (!$page) {
+        header('Location: ' . HOST . BASE_URL . "user404");
+        exit;
+    }
+    $actions = $viewRole > 0 ? $user->loadActions($_GET["id"]) : "";
     $stat = $viewRole > 0 ? $user->loadStat($_GET["id"]) : "";
 }
 

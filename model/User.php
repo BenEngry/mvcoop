@@ -74,13 +74,13 @@ class User
         return ["status" => true];
     }
 
-    //TODO create check id func, but in USER.php
-    //TODO create check hidden account, but in USER.php
+    //TODO create check id func, but in USER.php (done)
+    //TODO create check hidden account, but in USER.php (done)
 
     public function loadActions($id)
     {
         $stmt = $this->pdo->prepare("SELECT idUser, delUser, promoteUser, declineUser, passToLogData, delUsersMessages, reductionUsersMessages, delOtherAdmins, delOtherManagers, addComments, loginingToPage FROM `opportunity` WHERE idUser = :id");
-        $stmt->execute(["id" => 34]);
+        $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
         return <<<HERE
             <div class="actions">
@@ -110,8 +110,19 @@ class User
             HERE;
     }
 
+    public function checkId($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT `login` FROM `users` WHERE id = :id");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        return (bool)$customer["login"];
+    }
+
     public function loadUserPage($id)
     {
+        if (!$this->checkId($id)) {
+            return false;
+        }
         $stmt = $this->pdo->prepare("SELECT `id`, `login`, `email`, `role` FROM `users` WHERE id = :id");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
