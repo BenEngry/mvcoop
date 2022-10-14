@@ -1,5 +1,3 @@
-
-<?= $admin->testXML() ?>
 <select>
 <!--  TODO CREATE OPPORTUNIRT FORM AND ADD XML  -->
     <option>op1</option>
@@ -24,8 +22,8 @@
         <th>Login</th>
         <th>Select</th>
     </tr>
-    <?= $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1) ?>
+    <?= $table ?>
 </table>
 <div class="pages">
-    <?= $admin->pagination($admin->getNumPages("users"), "opportunity") ?>
+    <?= $paggination ?>
 </div>

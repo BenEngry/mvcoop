@@ -15,6 +15,9 @@ $fields = extractFields($_POST, $neededFieldsArray);
 
 $admin = new Admin($connect, $pdo);
 
+$table = $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1);
+$paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");
+
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
     if ($fields["type"] === "promotion") {

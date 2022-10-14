@@ -134,15 +134,18 @@ class Admin
 
     public function pagination($pagesCount, $url)
     {
+        $pages = "";
         foreach(range(1, $pagesCount) as $number) {
-            echo "<a class='pageButton " . ($_GET["p"] == $number ? "pageButtonCurrent" : "") . "' href='/" . $url . "?p=" . $number . "'>" . $number . "</a>";
+            $pages .= "<a class='pageButton " . ($_GET["p"] == $number ? "pageButtonCurrent" : "") . "' href='/" . $url . "?p=" . $number . "'>" . $number . "</a>";
         }
+        return $pages;
     }
 
     public function getPageOpportunity($page, $lim = 10)
     {
         $stmt = $this->pdo->prepare("CALL getUsersOpportunity(:page, :limit)");
         $stmt->execute(["page" => $page, "limit" => $lim]);
+        $table = "";
         while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
             if ($row["role"] === "1") {
                 $role = "admin";
@@ -151,7 +154,7 @@ class Admin
             } else {
                 $role = "user";
             }
-            echo "<tr>" .
+            $table .= "<tr>" .
                     "<td>" . $row['id'] . "</td>" .
                     "<td><a href='" . BASE_URL . "user?id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a>" . "</td>" .
                     "<td>" . $row["email"] . "</td>" .
@@ -191,20 +194,25 @@ class Admin
                     "</td>" .
                 "</tr>";
         }
+        return $table;
     }
 
-    public function ifExistId($id) {
-//        TODO CREATE FUNCTION FOR CHECK id
-    }
-
-    public function testXML()
+    public function testXML($role = "user")
     {
         $xml = simplexml_load_file("./assets/settings/user.xml");
-
-        foreach ($xml->opporrtunity->user->action as $row) {
-            echo "<p>";
-            echo $row["type"] . " : " . $row;
-            echo "</p>";
+        $role = (string)$xml->init;
+        $actions = [];
+        foreach ($xml->setUser->{$role}->data as $row) {
+            $attr = $row["type"];
+            $actions["$attr"] = $row;
+            echo $attr . " : " . $row;
         }
+        foreach ($xml->opporrtunity->{$role}->action as $row) {
+            $attr = $row["type"];
+            $actions["$attr"] = $row;
+            echo $attr . " : " . $row;
+        }
+        echo (string)$actions["role"] === "0" ? "t" : "f" ;
+        return $actions;
     }
 }

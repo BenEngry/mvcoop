@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <root>
+    <init>
+        user
+    </init>
     <setUser>
         <user>
-            <role>0</role>
-            <promotion>0</promotion>
+            <data type="role">0</data>
+            <data type="promotion">0</data>
         </user>
+        <admin>
+            <data type="role">1</data>
+            <data type="promotion">0</data>
+        </admin>
+        <manager>
+            <data type="role">2</data>
+            <data type="promotion">0</data>
+        </manager>
     </setUser>
     <opporrtunity>
         <user>
