@@ -15,11 +15,17 @@ class Authorization
         $errors = [];
         return $errors;
     }
-
+//  pizda knidj, login in chesk user function,
     public function checkUser($fields) : bool {
         $stmt = $this->pdo->prepare("SELECT * FROM `users` WHERE login = :log");
         $stmt->execute(["log" => $fields['name']]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+
+        $stmtOppor = $this->pdo->prepare("SELECT * FROM `opportunity` WHERE idUser = :id");
+        $stmtOppor->execute(["id" => $customer["id"]]);
+        $actions = $stmtOppor->fetch($this->pdo::FETCH_LAZY);
+
+//        TODO тут хуйня, актіонс ніхуя не асоц масив
 
         if (!$customer) {
             $_SESSION["log"] = "undefinded data";
@@ -33,7 +39,10 @@ class Authorization
                 "name" => $fields['name'],
                 "email" => $fields['email'],
                 "role" => $customer['role'],
-                "id" => $customer['id']
+                "id" => $customer['id'],
+                "opportunity" => array_slice($actions, 1)
+                //        TODO а тут його треба вставити
+
             ];
             return true;
         } else {
@@ -88,9 +97,11 @@ class Authorization
             "promotion" => $actions["promotion"]
         ]);
 
+        $id = $this->ifExistUser($fields["name"]);
+
         $stmtOpportunity = $this->pdo->prepare("INSERT INTO `opportunity` (idUser, delUser, promoteUser, declineUser, passToLogData, delUsersMessages, reductionUsersMessages, delOtherAdmins, delOtherManagers, addComments, loginingToPage) VALUES (:id, :delUser, :promoteUser, :declineUser, :passToLogData, :delUsersMessages, :reductionUsersMessages, :delOtherAdmins, :delOtherManagers, :addComments, :loginingToPage)");
         $stmtOpportunity->execute([
-            "id" => $this->ifExistUser($fields["name"]),
+            "id" => $id,
             "delUser" => $actions["delUser"],
             "promoteUser" => $actions["promoteUser"],
             "declineUser" => $actions["declineUser"],
@@ -104,10 +115,12 @@ class Authorization
         ]);
 
         $_SESSION['user_data'] = [
+            "id" => $id,
             "name" => $fields['name'],
             "email" => $fields['email'],
-            "role" => (string)$actions["role"]
-
+            "role" => (string)$actions["role"],
+            "opportunity" => array_slice($actions, 2)
+            //        TODO а тут теж
         ];
         return ["status" => true];
     }

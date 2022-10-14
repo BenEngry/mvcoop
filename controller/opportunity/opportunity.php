@@ -15,6 +15,8 @@ $fields = extractFields($_POST, $neededFieldsArray);
 
 $admin = new Admin($connect, $pdo);
 
+$delete = $admin->testXML();
+
 $table = $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1);
 $paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");
 

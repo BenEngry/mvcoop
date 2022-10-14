@@ -200,19 +200,32 @@ class Admin
     public function testXML($role = "user")
     {
         $xml = simplexml_load_file("./assets/settings/user.xml");
-        $role = (string)$xml->init;
+//        $role = (string)$xml->init;
         $actions = [];
         foreach ($xml->setUser->{$role}->data as $row) {
             $attr = $row["type"];
             $actions["$attr"] = $row;
-            echo $attr . " : " . $row;
+//            echo $attr . " : " . $row;
         }
         foreach ($xml->opporrtunity->{$role}->action as $row) {
             $attr = $row["type"];
             $actions["$attr"] = $row;
-            echo $attr . " : " . $row;
+//            echo $attr . " : " . $row;
         }
-        echo (string)$actions["role"] === "0" ? "t" : "f" ;
+//        echo (string)$actions["role"] === "0" ? "t" : "f" ;
+        $arr = $_SESSION["user_data"];
+        foreach ($arr as $key => $val) {
+            echo $key . " : " . $val . "<br>";
+        }
+
+        $stmtOppor = $this->pdo->prepare("SELECT * FROM `opportunity` WHERE idUser = :id");
+        $stmtOppor->execute(["id" => $_SESSION["user_data"]["id"]]);
+        $actions = $stmtOppor->fetch($this->pdo::FETCH_LAZY);
+//        foreach ($actions as $key => $val) {
+//            echo $key . " : " . $val . "<br>";
+//        }
+        echo $actions[0];
+//        TODO кароч, не можу дістати дії із оппору, хочу закинути ассоц массив, але хуй там. Потріно правильно дістати його і запихнути в сесію
         return $actions;
     }
 }
