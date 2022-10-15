@@ -24,8 +24,10 @@ class Admin
                     <th>Describtion</th>
                     <th>Delete</th>
                 </tr>";
+
         $stmt = $this->pdo->prepare("CALL getUsersPage(:page, :limit)");
         $stmt->execute(["page" => $page, "limit" => $lim]);
+
         while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
 
             if($row['role'] == 1) {
@@ -37,30 +39,40 @@ class Admin
             }
 
             if($row["status"] == "consider") {
+                $decline = "";
+                if ($_SESSION["user_data"]["opportunity"]["declineUser"] == 1) {
+                    $decline = "<button data-id" . $row['id'] . " data-type='up' class='up btn'>Promote</button>" .
+                        "<button data-id" . $row['id'] . " data-type='declain' class='disagree btn'>Declain</button>";
+                }
                 $desc = "<div>". $row["sended_at"] . "</div>" .
                         "<div>\"" . $row["desc"] . "\"</div>" .
-                        "<div>" .
-                            "<button data-id" . $row['id'] . " data-type='up' class='up btn'>Promote</button>" .
-                            "<button data-id" . $row['id'] . " data-type='declain' class='disagree btn'>Declain</button>" .
-                        "</div>";
+                        "<div>" . $decline . "</div>";
             } else {
                 $desc = "none";
             }
 
-            if($_SESSION['user_data']["name"] !== $row["login"]) {
+            if(
+                $_SESSION['user_data']["name"] !== $row["login"] and
+                (($_SESSION["user_data"]["opportunity"]["delUser"] and $row["role"] == 0) or
+                ($_SESSION["user_data"]["opportunity"]["delOtherManagers"] == 1 and $row["role"] == 2) or
+                ($_SESSION["user_data"]["opportunity"]["delOtherAdmins"] == 1 and $row["role"] == 1))
+            ) {
                 $delBtn = "<button data-id=" . $row['id'] . "data-type='del' class='del btn'> X </button>";
             } else {
-                $delBtn = "it's you :)";
+                $delBtn = "-";
+            }
+
+            $promote = "-";
+            if ($_SESSION["user_data"]["opportunity"]["promoteUser"] == 1) {
+                $promote = "<button data-id='" . $row["id"] . "' data-type='up' class='up btn'>up</button>" .
+                    "<button data-id='" . $row["id"] . "' data-type='down' class='down btn'>down</button>";
             }
 
             $table .= "<tr>" .
                     "<td>" . __('Name') . ":<pre class='" . $roleclass . "'><a href='" . BASE_URL . "user?id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a></pre>" . "</td>" .
                     "<td>" . __('Email') . ":" . $row["email"] . "</td>" .
                     "<td>" . __('Role') . ":" . $row["role"] . "</td>" .
-                    "<td>" .
-                        "<button data-id='" . $row["id"] . "' data-type='up' class='up btn'>up</button>" .
-                        "<button data-id='" . $row["id"] . "' data-type='down' class='down btn'>down</button>" .
-                    "</td>" .
+                    "<td>" . $promote . "</td>" .
                     "<td class='decs'>" . $desc . "</td>" .
                     "<td>" . $delBtn . "</td>" .
                  "</tr>";
@@ -149,6 +161,7 @@ class Admin
         }
         return $pages;
     }
+
 
     public function getPageOpportunity($page, $lim = 10)
     {

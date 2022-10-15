@@ -44,7 +44,7 @@
         </admin>
         <manager>
             <action type="delUser">1</action>
-            <action type="promoteUser">1</action>
+            <action type="promoteUser">0</action>
             <action type="declineUser">1</action>
             <action type="passToLogData">1</action>
             <action type="delUsersMessages">1</action>

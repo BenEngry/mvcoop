@@ -18,7 +18,6 @@ $admin = new Admin($connect, $pdo);
 $user = new User($connect, $pdo);
 
 $info = $user->loadInfoUser();
-$table = "";
 if ($_SESSION["user_data"]["role"] > 0) {
     $table = $admin->getPageUsers(isset($_GET["p"]) ? $_GET["p"] : 1);
     $pagination = $admin->pagination($admin->getNumPages("users"), "profile");
