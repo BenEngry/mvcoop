@@ -140,4 +140,30 @@ class User
             </div>
             HERE;
     }
+
+    public function loadInfoUser()
+    {
+        if($_SESSION['user_data']["role"] == 1) {
+            $role = "admin";
+        } elseif ($_SESSION['user_data']["role"] == 2) {
+            $role = "manager";
+        } else {
+            $role = "user";
+        }
+        $name = __("Name");
+        $email = __("Email");
+        $rl = __("Role");
+        return <<<HERE
+                <div class="infoUser" data-id=" {$_SESSION['user_data']["id"]} ">
+                    <p id="login" data-login="{$_SESSION['user_data']["name"]}">
+                        $name : {$_SESSION['user_data']["name"]}
+                    </p>
+                    <p>$email : {$_SESSION['user_data']["email"]}</p>
+                    <p>
+                        $rl : $role
+                    </p>
+                </div>
+                HERE;
+
+    }
 }

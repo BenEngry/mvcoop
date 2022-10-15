@@ -17,6 +17,13 @@ $fields = extractFields($_POST, $neededFieldsArray);
 $admin = new Admin($connect, $pdo);
 $user = new User($connect, $pdo);
 
+$info = $user->loadInfoUser();
+$table = "";
+if ($_SESSION["user_data"]["role"] > 0) {
+    $table = $admin->getPageUsers(isset($_GET["p"]) ? $_GET["p"] : 1);
+    $pagination = $admin->pagination($admin->getNumPages("users"), "profile");
+}
+
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
     if ($fields["type"] === "del") {

@@ -16,6 +16,14 @@ class Admin
 
     public function getPageUsers($page, $lim = 10)
     {
+        $table = "<tr>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Promotion</th>
+                    <th>Describtion</th>
+                    <th>Delete</th>
+                </tr>";
         $stmt = $this->pdo->prepare("CALL getUsersPage(:page, :limit)");
         $stmt->execute(["page" => $page, "limit" => $lim]);
         while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
@@ -45,7 +53,7 @@ class Admin
                 $delBtn = "it's you :)";
             }
 
-            echo "<tr>" .
+            $table .= "<tr>" .
                     "<td>" . __('Name') . ":<pre class='" . $roleclass . "'><a href='" . BASE_URL . "user?id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a></pre>" . "</td>" .
                     "<td>" . __('Email') . ":" . $row["email"] . "</td>" .
                     "<td>" . __('Role') . ":" . $row["role"] . "</td>" .
@@ -57,6 +65,7 @@ class Admin
                     "<td>" . $delBtn . "</td>" .
                  "</tr>";
         }
+        return $table;
     }
 
     public function  getNumPages($table): int
@@ -199,33 +208,27 @@ class Admin
 
     public function testXML($role = "user")
     {
-        $xml = simplexml_load_file("./assets/settings/user.xml");
+//        $xml = simplexml_load_file("./assets/settings/user.xml");
 //        $role = (string)$xml->init;
-        $actions = [];
-        foreach ($xml->setUser->{$role}->data as $row) {
-            $attr = $row["type"];
-            $actions["$attr"] = $row;
-//            echo $attr . " : " . $row;
-        }
-        foreach ($xml->opporrtunity->{$role}->action as $row) {
-            $attr = $row["type"];
-            $actions["$attr"] = $row;
-//            echo $attr . " : " . $row;
-        }
-//        echo (string)$actions["role"] === "0" ? "t" : "f" ;
-        $arr = $_SESSION["user_data"];
-        foreach ($arr as $key => $val) {
-            echo $key . " : " . $val . "<br>";
-        }
-
-        $stmtOppor = $this->pdo->prepare("SELECT * FROM `opportunity` WHERE idUser = :id");
-        $stmtOppor->execute(["id" => $_SESSION["user_data"]["id"]]);
-        $actions = $stmtOppor->fetch($this->pdo::FETCH_LAZY);
-//        foreach ($actions as $key => $val) {
+//        $actions = [];
+//        foreach ($xml->setUser->{$role}->data as $row) {
+//            $attr = $row["type"];
+//            $actions["$attr"] = $row;
+////            echo $attr . " : " . $row;
+//        }
+//        foreach ($xml->opporrtunity->{$role}->action as $row) {
+//            $attr = $row["type"];
+//            $actions["$attr"] = $row;
+////            echo $attr . " : " . $row;
+//        }
+////        echo (string)$actions["role"] === "0" ? "t" : "f" ;
+//        $arr = $_SESSION["user_data"];
+//        foreach ($arr as $key => $val) {
 //            echo $key . " : " . $val . "<br>";
 //        }
-        echo $actions[0];
-//        TODO кароч, не можу дістати дії із оппору, хочу закинути ассоц массив, але хуй там. Потріно правильно дістати його і запихнути в сесію
-        return $actions;
+
+//        var_dump($_SESSION["user_data"]["opportunity"]["delUser"]);
+
+        return "actions";
     }
 }

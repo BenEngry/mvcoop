@@ -15,7 +15,7 @@ class Authorization
         $errors = [];
         return $errors;
     }
-//  pizda knidj, login in chesk user function,
+//  pizda krindj, login in check user function,
     public function checkUser($fields) : bool {
         $stmt = $this->pdo->prepare("SELECT * FROM `users` WHERE login = :log");
         $stmt->execute(["log" => $fields['name']]);
@@ -23,9 +23,7 @@ class Authorization
 
         $stmtOppor = $this->pdo->prepare("SELECT * FROM `opportunity` WHERE idUser = :id");
         $stmtOppor->execute(["id" => $customer["id"]]);
-        $actions = $stmtOppor->fetch($this->pdo::FETCH_LAZY);
-
-//        TODO тут хуйня, актіонс ніхуя не асоц масив
+        $actions = $stmtOppor->fetchAll();
 
         if (!$customer) {
             $_SESSION["log"] = "undefinded data";
@@ -40,7 +38,7 @@ class Authorization
                 "email" => $fields['email'],
                 "role" => $customer['role'],
                 "id" => $customer['id'],
-                "opportunity" => array_slice($actions, 1)
+                "opportunity" => $actions[0]
                 //        TODO а тут його треба вставити
 
             ];
@@ -67,7 +65,7 @@ class Authorization
         return false;
     }
 
-    public function getUserXML($role = "admin")
+    public function getUserXML($role = "user")
     {
         $xml = simplexml_load_file("./assets/settings/user.xml");
 //        $role = (string)$xml->init; ??? not working...
@@ -88,13 +86,13 @@ class Authorization
 //          create new row for opportunity table with the same id
         $actions = $this->getUserXML();
 
-        $stmtUsers = $this->pdo->prepare("INSERT into users VALUES (null, :email, :login, :password, :role, :promotion)");
+        $stmtUsers = $this->pdo->prepare("INSERT INTO users (`id`, `email`, `login`, `password`, `role`, `promotion`) VALUES (null, :email, :login, :password, :role, :promotion)");
         $stmtUsers->execute([
             "email" => $fields['email'],
             "login" => $fields['name'],
             "password" => $fields['password'],
-            "role" => $actions["role"],
-            "promotion" => $actions["promotion"]
+            "role" => (integer)$actions["role"],
+            "promotion" => (integer)$actions["promotion"]
         ]);
 
         $id = $this->ifExistUser($fields["name"]);
@@ -119,8 +117,7 @@ class Authorization
             "name" => $fields['name'],
             "email" => $fields['email'],
             "role" => (string)$actions["role"],
-            "opportunity" => array_slice($actions, 2)
-            //        TODO а тут теж
+            "opportunity" => array_slice($actions, 2) // ХЗ ЧИ ПРАЦЮЄ ЯК МАЄ БУТИ
         ];
         return ["status" => true];
     }

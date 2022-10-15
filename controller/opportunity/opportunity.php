@@ -4,6 +4,10 @@ require_once("./model/Admin.php");
 
 use nmvcsite\model\Admin;
 
+//if ($_SESSION["user_data"]["opportunity"]["delUser"]) {
+//
+//}
+
 $title = __('Opportunity');
 
 $fieldsNotCleaned = $_POST;
@@ -22,9 +26,7 @@ $paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");
 
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
-    if ($fields["type"] === "promotion") {
-        echo json_encode($user->getPromotion($_SESSION['user_data']["id"], $fields["desc"]));
-    }
+
     exit;
 }
 
