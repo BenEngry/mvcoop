@@ -46,4 +46,8 @@ if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["H
 include('view/base/v_header.php');
 include('view/base/v_content.php');
 include('view/profile/v_profile.php');
-include('view/base/v_footer.php');
+include('view/base/v_pre_footer.php');
+include('view/script/jquery.php');
+include('view/script/profile.php');
+include('view/script/panel.php');
+include('view/base/v_after_footer.php');

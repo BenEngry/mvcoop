@@ -6,6 +6,7 @@
                 <button class="controButton" id="promotion">Get Promotion</button>
                 <?php endif; ?>
             </div>
+            <div class="forms"></div>
             <table class="users">
             <?= $table ?>
             </table>

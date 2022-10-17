@@ -282,7 +282,7 @@ promotionBtn.addEventListener("click", (e) => {
                         alert("Your promotion on consider.");
                     }
                     if(data.status) {
-                        alert("Your promotion is sended!");
+                        alert("Your promotion is sended!up");
                     }
                 }
             })
