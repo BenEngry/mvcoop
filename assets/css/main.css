@@ -382,3 +382,9 @@ pre {
 	border: 1px solid #252525;
 	text-transform: uppercase;
 }
+
+.send {
+	padding: 3px 10px;
+	border: 1px solid #252525;
+	border-radius: 5px;
+}

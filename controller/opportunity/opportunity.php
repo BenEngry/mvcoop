@@ -14,7 +14,7 @@ if ($_SESSION['user_data']['opportunity']['promoteUser'] != 1) {
 $title = __('Opportunity');
 
 $fieldsNotCleaned = $_POST;
-$neededFieldsArray = ['id'];
+$neededFieldsArray = ['id', 'oppor', 'action'];
 
 /** extract */
 $fields = extractFields($_POST, $neededFieldsArray);
@@ -30,7 +30,9 @@ $paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");
 
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
-
+    if ($fields["id"]) {
+        echo json_encode($admin->changeOpportunity($fields["id"], $fields["type"]));
+    }
     exit;
 }
 

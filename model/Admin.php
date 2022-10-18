@@ -214,7 +214,7 @@ class Admin
                         ($row["loginingToPage"] ? "+" : "-") .
                     "</td>" .
                     "<td>" .
-                        "<input type='checkbox' name='user' value='" . $row['id'] . "'>" .
+                        "<input type='checkbox' name='id' value='" . $row['id'] . "'>" .
                     "</td>" .
                 "</tr>";
         }
@@ -232,6 +232,11 @@ class Admin
                     <button data-id='$id' data-type='down' class='down btn'> Down </button>";
         }
         return '<div class="control">' . $btns . '</div>';
+    }
+
+    public function changeOpportunity($id, $type)
+    {
+        return $id;
     }
 
 
