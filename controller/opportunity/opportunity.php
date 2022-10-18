@@ -1,12 +1,10 @@
 <?php
 
 require_once("./model/Admin.php");
+require_once("./model/Page.php");
 
 use nmvcsite\model\Admin;
-
-//if ($_SESSION["user_data"]["opportunity"]["delUser"]) {
-//
-//}
+use nmvcsite\model\Page;
 
 $title = __('Opportunity');
 
@@ -18,8 +16,9 @@ $fields = extractFields($_POST, $neededFieldsArray);
 /**  validate */
 
 $admin = new Admin($connect, $pdo);
+$page = new Page();
 
-$delete = $admin->testXML();
+$fff = $page->loadNavBar();
 
 $table = $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1);
 $paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");

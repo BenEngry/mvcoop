@@ -42,7 +42,7 @@ class Admin
                 $decline = "";
                 if ($_SESSION["user_data"]["opportunity"]["declineUser"] == 1) {
                     $decline = "<button data-id" . $row['id'] . " data-type='up' class='up btn'>Promote</button>" .
-                        "<button data-id" . $row['id'] . " data-type='declain' class='disagree btn'>Declain</button>";
+                        "<button data-id='" . $row['id'] . "' data-type='declain' class='disagree btn'>Declain</button>";
                 }
                 $desc = "<div>". $row["sended_at"] . "</div>" .
                         "<div>\"" . $row["desc"] . "\"</div>" .
@@ -57,7 +57,7 @@ class Admin
                 ($_SESSION["user_data"]["opportunity"]["delOtherManagers"] == 1 and $row["role"] == 2) or
                 ($_SESSION["user_data"]["opportunity"]["delOtherAdmins"] == 1 and $row["role"] == 1))
             ) {
-                $delBtn = "<button data-id=" . $row['id'] . "data-type='del' class='del btn'> X </button>";
+                $delBtn = "<button data-id='" . $row['id'] . "' data-type='del' class='del btn'> X </button>";
             } else {
                 $delBtn = "-";
             }
@@ -100,6 +100,7 @@ class Admin
 
 
         if((int)$customer["role"] + $type < 0 or (int)$customer["role"] + $type > 2) {
+            echo $customer["role"] + $type;
             return [ "status" => false ];
         }
 
@@ -111,6 +112,7 @@ class Admin
 
     public function delUser($type, $id)
     {
+//        add something else?
         if ($type === "del") {
             $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
             $stmt->execute(["id" => $id]);
@@ -122,8 +124,8 @@ class Admin
 
     public function declainPromotion($id)
     {
-        $stmt = $this->pdo->prepare("UPDATE `promotions` SET status = 'declain' WHERE id_user = ?;");
-        $stmt->execute([$id]);
+        $stmt = $this->pdo->prepare("UPDATE promotions SET status = 'declain' WHERE id_user = :id");
+        $stmt->execute(["id" => $id]);
         return [ "status" => true ];
     }
 
@@ -218,6 +220,18 @@ class Admin
         }
         return $table;
     }
+
+    public function loadButtons($id)
+    {
+        return <<<HERE
+                <div class="statistic">
+                    <button data-id='$id' data-type='del' class='del btn'> Delete </button>
+                    <button data-id='$id' data-type='up' class='up btn'> Up </button>
+                    <button data-id='$id' data-type='down' class='down btn'> Down </button>
+                </div>
+            HERE;
+    }
+
 
     public function testXML($role = "user")
     {

@@ -126,9 +126,9 @@ class User
         $stmt = $this->pdo->prepare("SELECT `id`, `login`, `email`, `role` FROM `users` WHERE id = :id");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
-        if($customer["login"] === 1) {
+        if($customer["role"] === "1") {
             $role = "admin";
-        } elseif ($customer["login"] === 2) {
+        } elseif ($customer["role"] === "2") {
             $role = "manager";
         } else {
             $role = "user";

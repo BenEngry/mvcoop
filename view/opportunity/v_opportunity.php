@@ -1,5 +1,5 @@
+<?= $fff ?>
 <select>
-<!--  TODO CREATE OPPORTUNIRT FORM AND ADD XML  -->
     <option>op1</option>
     <option>op2</option>
     <option>op3</option>
