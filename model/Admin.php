@@ -223,13 +223,15 @@ class Admin
 
     public function loadButtons($id)
     {
-        return <<<HERE
-                <div class="statistic">
-                    <button data-id='$id' data-type='del' class='del btn'> Delete </button>
-                    <button data-id='$id' data-type='up' class='up btn'> Up </button>
-                    <button data-id='$id' data-type='down' class='down btn'> Down </button>
-                </div>
-            HERE;
+        $btns = "";
+        if ($_SESSION['user_data']['opportunity']['delUser'] == 1) {
+            $btns .= "<button data-id='$id' data-type='del' class='del btn'> Delete </button>";
+        }
+        if ($_SESSION['user_data']['opportunity']['promoteUser'] == 1) {
+            $btns .= "<button data-id='$id' data-type='up' class='up btn'> Up </button>
+                    <button data-id='$id' data-type='down' class='down btn'> Down </button>";
+        }
+        return '<div class="control">' . $btns . '</div>';
     }
 
 

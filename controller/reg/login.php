@@ -1,5 +1,8 @@
 <?php
 
+require_once("./model/Page.php");
+use nmvcsite\model\Page;
+
 $title = __('Register');
 $content = __('Content');
 
@@ -11,6 +14,9 @@ $fields = array_merge(extractFields($_POST, $neededFieldsArray), ["email", "pass
 /**  validate */
 
 $validateErrors = $_POST?$auth->loginValidate($fields):[];
+$page = new Page();
+
+$nav = $page->loadNavBar();
 
 if(empty($validateErrors) and count($_POST)) {
     $result = $auth->checkUser($fields);

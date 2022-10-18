@@ -2,6 +2,11 @@
 $title = __('Chat List');
 $messages = $mes->getMessages();
 
+require_once("./model/Page.php");
+
+use nmvcsite\model\Page;
+
+
 $successText = false;
 if (isset($_SESSION['is_message_added']) && $_SESSION['is_message_added']) {
     $successText = true;
@@ -15,6 +20,9 @@ $neededFieldsArray = ['name', 'title', 'message', 'id'];
 $fields = extractFields($_POST, $neededFieldsArray);
 
 $validateErrors = $_POST?$mes->messagesValidate($fields):[];
+$page = new Page();
+
+$nav = $page->loadNavBar();
 
 if(count($_POST)) {
     $result = $mes->changeMessage($fields);

@@ -1,33 +1,10 @@
 <nav class="site-nav">
     <div class="container navbar">
         <li class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>"><?= __('Home')?></a>
-            </li>
-            <?php if(isset($_SESSION['user_data']) and $_SESSION['user_data']): ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>messages/add"><?= __('Add')?></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>profile"><?= __('Profile')?></a>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Contacts')?></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?=BASE_URL?>promotions"><?= __('Promotions')?></a>
-            </li>
-            <li>
-                <a class="nav-link" href="<?=BASE_URL?>contacts"><?= __('Not Exists')?></a>
-            </li>
-            <li>
-                <a class="nav-link" href="<?=BASE_URL?>opportunity"><?= __('Oportunity')?></a>
-            </li>
+        <?= $nav ?>
         </li>
         <ul class="nav navtwo">
-            <li class="nav-item navtwoitem"> <?= __('Console') ?> </li>
-            <li class="nav-item">   
+            <li class="nav-item">
                 <form action="" id="trans">
                     <select name="ln" id="translate">
                         <option value="en" <?php if ($_SESSION['ln'] == "en"): ?> selected <?php endif; ?> >EN</option >

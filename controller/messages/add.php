@@ -1,5 +1,14 @@
 <?php
 
+require_once("./model/Page.php");
+
+use nmvcsite\model\Page;
+
+if ($_SESSION['user_data']['opportunity']['addComments'] != 1) {
+    header('Location: ' . HOST . BASE_URL);
+    exit;
+}
+
 $title = __('Add message');
 
 $fieldsNotCleaned = $_POST;
@@ -8,6 +17,10 @@ $neededFieldsArray = ['name', 'title', 'message'];
 /** extract */
 $fields = extractFields($_POST, $neededFieldsArray);
 /**  validate */
+
+$page = new Page();
+
+$nav = $page->loadNavBar();
 
 $validateErrors = $_POST?$mes->messagesValidate($fields):[];
 if(empty($validateErrors) and count($_POST)) {

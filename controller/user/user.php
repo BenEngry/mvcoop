@@ -2,7 +2,9 @@
 
 require_once("./model/User.php");
 require_once ("./model/Admin.php");
+require_once("./model/Page.php");
 
+use nmvcsite\model\Page;
 use nmvcsite\model\User;
 use nmvcsite\model\Admin;
 
@@ -19,6 +21,9 @@ $fields = extractFields($_POST, $neededFieldsArray);
 
 $user = new User($connect, $pdo);
 $admin = new Admin($connect, $pdo);
+$page = new Page();
+
+$nav = $page->loadNavBar();
 
 $actions = "";
 $stat = "";

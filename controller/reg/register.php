@@ -1,5 +1,10 @@
 <?php
 
+
+require_once("./model/Page.php");
+
+use nmvcsite\model\Page;
+
 $title = __('Register');
 $content = __('Content');
 
@@ -11,6 +16,9 @@ $fields = extractFields($_POST, $neededFieldsArray);
 /**  validate */
 
 $validateErrors = $_POST?$auth->registerValidate($fields):[];
+$page = new Page();
+
+$nav = $page->loadNavBar();
 
 if(empty($validateErrors) and count($_POST)) {
     $result = $auth->setUser($fields);

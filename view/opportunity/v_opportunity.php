@@ -1,9 +1,10 @@
-<?= $fff ?>
-<select>
-    <option>op1</option>
-    <option>op2</option>
-    <option>op3</option>
-</select>
+<form>
+    <select>
+        <option>op1</option>
+        <option>op2</option>
+        <option>op3</option>
+    </select>
+</form>
 <table class="users oppor">
     <tr>
         <th>id</th>

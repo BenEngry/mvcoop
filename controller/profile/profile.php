@@ -2,8 +2,12 @@
 
 require_once ("./model/Admin.php");
 require_once "./model/User.php";
+require_once("./model/Page.php");
+
 use nmvcsite\model\Admin;
 use nmvcsite\model\User;
+use nmvcsite\model\Page;
+
 
 $title = __('Profile');
 
@@ -16,6 +20,9 @@ $fields = extractFields($_POST, $neededFieldsArray);
 
 $admin = new Admin($connect, $pdo);
 $user = new User($connect, $pdo);
+$page = new Page();
+
+$nav = $page->loadNavBar();
 
 $info = $user->loadInfoUser();
 if ($_SESSION["user_data"]["role"] > 0) {

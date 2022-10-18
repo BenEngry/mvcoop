@@ -6,6 +6,11 @@ require_once("./model/Page.php");
 use nmvcsite\model\Admin;
 use nmvcsite\model\Page;
 
+if ($_SESSION['user_data']['opportunity']['promoteUser'] != 1) {
+    header('Location: ' . HOST . BASE_URL);
+    exit;
+}
+
 $title = __('Opportunity');
 
 $fieldsNotCleaned = $_POST;
@@ -18,7 +23,7 @@ $fields = extractFields($_POST, $neededFieldsArray);
 $admin = new Admin($connect, $pdo);
 $page = new Page();
 
-$fff = $page->loadNavBar();
+$nav = $page->loadNavBar();
 
 $table = $admin->getPageOpportunity(isset($_GET["p"]) ? $_GET["p"] : 1);
 $paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");
