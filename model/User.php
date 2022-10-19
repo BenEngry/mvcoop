@@ -48,7 +48,10 @@ class User
 
     public function checkForPromotion($id)
     {
-
+        if (!$this->checkId($id)) {
+            header("Location: http://nmvc.site/");
+            return false;
+        }
         $stmt = $this->pdo->prepare("SELECT `status` FROM `promotions` WHERE `id_user` = :id");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
@@ -62,6 +65,11 @@ class User
 
     public function getPromotion($id, $desc)
     {
+        if (!$this->checkId($id)) {
+            header("Location: http://nmvc.site/");
+            return false;
+        }
+
         $status = $this->checkForPromotion($id);
 
         if ($status) {
@@ -74,11 +82,13 @@ class User
         return ["status" => true];
     }
 
-    //TODO create check id func, but in USER.php (done)
-    //TODO create check hidden account, but in USER.php (done)
-
     public function loadActions($id)
     {
+        if (!$this->checkId($id)) {
+            header("Location: http://nmvc.site/");
+            return false;
+        }
+
         $stmt = $this->pdo->prepare("SELECT idUser, delUser, promoteUser, declineUser, passToLogData, delUsersMessages, reductionUsersMessages, delOtherAdmins, delOtherManagers, addComments, loginingToPage FROM `opportunity` WHERE idUser = :id");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);

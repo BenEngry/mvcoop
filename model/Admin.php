@@ -80,6 +80,14 @@ class Admin
         return $table;
     }
 
+    public function checkId($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT `login` FROM `users` WHERE id = :id");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        return (bool)$customer["login"];
+    }
+
     public function  getNumPages($table): int
     {
         $querry = "SELECT count(*) as count FROM `$table`";
@@ -92,6 +100,11 @@ class Admin
 
     public function updateRole($type, $id)
     {
+        if (!$this->checkId($id)) {
+            header("Location: http://nmvc.site/");
+            return false;
+        }
+
         $type = $type === "up" ? 1 : -1;
 
         $stmt = $this->pdo->prepare("SELECT role FROM users WHERE id = :id");
@@ -178,7 +191,8 @@ class Admin
             } else {
                 $role = "user";
             }
-            $table .= "<tr>" .
+            $table .= "<lable for='checkId'>" .
+                    "<tr>" .
                     "<td>" . $row['id'] . "</td>" .
                     "<td><a href='" . BASE_URL . "user?id=" . $row["id"] . "' class='userLink'>" . $row['login'] . "</a>" . "</td>" .
                     "<td>" . $row["email"] . "</td>" .
@@ -214,9 +228,10 @@ class Admin
                         ($row["loginingToPage"] ? "+" : "-") .
                     "</td>" .
                     "<td>" .
-                        "<input type='checkbox' name='id' value='" . $row['id'] . "'>" .
+                        "<input type='checkbox' name='action' id='checkId' value='" . $row['id'] . "'>" .
                     "</td>" .
-                "</tr>";
+                "</tr>" .
+                "</lable>";
         }
         return $table;
     }
@@ -234,9 +249,11 @@ class Admin
         return '<div class="control">' . $btns . '</div>';
     }
 
-    public function changeOpportunity($id, $type)
+    public function changeOpportunity($id, $type, $oppor)
     {
-        return $id;
+        $stmt = $this->pdo->prepare("UPDATE `opportunity` SET " . $oppor . " = " . $type . " WHERE idUser = " . $id);
+        $stmt->execute();
+        return ["status" => true];
     }
 
 

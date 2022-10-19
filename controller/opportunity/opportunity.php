@@ -31,7 +31,7 @@ $paggination = $admin->pagination($admin->getNumPages("users"), "opportunity");
 if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["HTTP_X_REQUESTED_WITH"]) {
     header("Content-type: application/json");
     if ($fields["id"]) {
-        echo json_encode($admin->changeOpportunity($fields["id"], $fields["type"]));
+        echo json_encode($admin->changeOpportunity($fields["id"], $fields["action"], $fields["oppor"]));
     }
     exit;
 }
@@ -39,4 +39,7 @@ if (isset($_SERVER["HTTP_X_REQUESTED_WITH"]) && "XMLHttpRequest" === $_SERVER["H
 include('view/base/v_header.php');
 include('view/base/v_content.php');
 include('view/opportunity/v_opportunity.php');
-include('view/base/v_footer.php');
+include('view/base/v_pre_footer.php');
+include('view/script/jquery.php');
+include('view/script/oppor.php');
+include('view/base/v_after_footer.php');

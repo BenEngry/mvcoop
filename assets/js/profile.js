@@ -143,50 +143,51 @@ const promotionView = () => {
 
 const promotionBtn = document.querySelector("#promotion");
 
+if (promotionBtn) {
+    promotionBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const forms = document.querySelector(".forms");
+        if (document.querySelector(".changeForm")) {
+            forms.innerHTML = "";
+        } else {
+            forms.innerHTML = promotionView();
 
-promotionBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    const forms = document.querySelector(".forms");
-    if (document.querySelector(".changeForm")) {
-        forms.innerHTML = "";
-    } else {
-        forms.innerHTML = promotionView();
+            const changeSubmitBtn = document.querySelector("#changeSubmit");
 
-        const changeSubmitBtn = document.querySelector("#changeSubmit");
+            changeSubmitBtn.addEventListener("click", e => {
+                e.preventDefault();
 
-        changeSubmitBtn.addEventListener("click", e => {
-            e.preventDefault();
+                const id = document.querySelector(".infoUser").dataset.id;
+                const type = changeSubmitBtn.dataset.type;
+                const desc = document.querySelector("#desc").value;
 
-            const id = document.querySelector(".infoUser").dataset.id;
-            const type = changeSubmitBtn.dataset.type;
-            const desc = document.querySelector("#desc").value;
+                const data = {
+                    type : type,
+                    id : id,
+                    desc : desc
+                };
 
-            const data = {
-                type : type,
-                id : id,
-                desc : desc
-            };
-
-            $.ajax({
-                url: "http://nmvc.site/profile",
-                method: "POST",
-                data : data,
-                dataType : "json",
-                success : function (data) {
-                    if(!data.status) {
-                        alert("Your promotion on consider.");
-                        forms.innerHTML = "";
+                $.ajax({
+                    url: "http://nmvc.site/profile",
+                    method: "POST",
+                    data : data,
+                    dataType : "json",
+                    success : function (data) {
+                        if(!data.status) {
+                            alert("Your promotion on consider.");
+                            forms.innerHTML = "";
+                        }
+                        if(data.status) {
+                            alert("Your promotion is sended!");
+                        }
                     }
-                    if(data.status) {
-                        alert("Your promotion is sended!");
-                    }
-                }
-            })
-        });
+                })
+            });
 
-    }
+        }
+    });
+}
 
-});
 
 
 });
