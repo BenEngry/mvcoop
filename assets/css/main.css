@@ -388,3 +388,19 @@ pre {
 	border: 1px solid #252525;
 	border-radius: 5px;
 }
+
+.statistic {
+	border: 1px solid #252525;
+	border-radius: 15px;
+	padding: 15px 20px;
+}
+
+.mainInfo {
+	font-size: 14px;
+	display: flex;
+	flex-direction: row;
+}
+
+.mainInfo p {
+	margin: 10px 10px;
+}

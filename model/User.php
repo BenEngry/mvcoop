@@ -111,12 +111,52 @@ class User
 
     public function loadStat($id)
     {
-//        pdo
-//        execute
+        $stmt = $this->pdo->prepare("CALL getAvgById(:id)");
+        $stmt->execute(["id" => $id]);
+        $customerAvg = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $avg = $customerAvg["avgTime"] ?: "no data";
+        $stmt->closeCursor();
+
+        $stmt = $this->pdo->prepare("CALL getAvgDayById(:id)");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $avgd = $customer["avgTime"] ?: "no data";
+        $stmt->closeCursor();
+
+        $stmt = $this->pdo->prepare("CALL getAvgMonthById(:id)");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $avgm = $customer["avgTime"] ?: "no data";
+        $stmt->closeCursor();
+
+        $stmt = $this->pdo->prepare("CALL getAvgYearById(:id)");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $avgy = $customer["avgTime"] ?: "no data";
+        $stmt->closeCursor();
+
+        $stmt = $this->pdo->prepare("CALL getMaxSessionById(:id)");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $min = $customer["maxTime"] ?: "no data";
+        $stmt->closeCursor();
+
+        $stmt = $this->pdo->prepare("CALL getMinSessionById(:id)");
+        $stmt->execute(["id" => $id]);
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $max = $customer["maxTime"] ?: "no data";
+
         return <<<HERE
-                <div class="statistic">
-                    
+            <div class="statistic">
+                <div class="mainInfo">
+                    <p>Max: $min s |</p>
+                    <p>Min: $max s |</p>
+                    <p>AVG: $avg s |</p>
+                    <p>AVG per day: $avgd s |</p>
+                    <p>AVG per month: $avgm s |</p>
+                    <p>AVG per year: $avgy s</p>
                 </div>
+            </div>
             HERE;
     }
 

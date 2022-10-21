@@ -1,4 +1,3 @@
-<?= time() ?>
 <?php if ($successText): ?>
     <div class="alert alert-success" role="alert">
         <?= __('The message has been successfully added!') ?>
