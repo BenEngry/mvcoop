@@ -15,7 +15,25 @@ class Authorization
         $errors = [];
         return $errors;
     }
-//  pizda krindj, login in check user function,
+
+    private function setEnterLog($id) {
+        $stmt = $this->pdo->prepare("INSERT INTO `logs` (`idUser`, `date`, `entered`, `sEntered`, `month` , `year`, `day`) VALUES(:id, CURRENT_DATE, CURRENT_TIME, :sEntered, :month, :year, :day)");
+        $stmt->execute(["id" => $id, "sEntered" => time(), "day" => date("d"), "month" => date("m"), "year" => date("y")]);
+    }
+
+    private function setExitLog($id) {
+        $stmt = $this->pdo->prepare("UPDATE `logs` SET `exit` = CURRENT_TIME, `sExit` = :sExit WHERE idUser = :id AND entered = :entered");
+        $stmt->execute(["id" => $id, "entered" => $_SESSION['user_data']['start'], "sExit" => time()]);
+    }
+
+    public function destroySession() {
+        $this->setExitLog($_SESSION['user_data']['id']);
+        unset($_SESSION['is_user_logined']);
+        unset($_SESSION['user_data']);
+        unset($_SESSION["log"]);
+        return ["status" => true];
+    }
+//  pizda crinje, login in check user function,
     public function checkUser($fields) : bool {
         $stmt = $this->pdo->prepare("SELECT * FROM `users` WHERE login = :log");
         $stmt->execute(["log" => $fields['name']]);
@@ -38,10 +56,12 @@ class Authorization
                 "email" => $fields['email'],
                 "role" => $customer['role'],
                 "id" => $customer['id'],
-                "opportunity" => $actions[0]
-                //        TODO а тут його треба вставити
-
+                "opportunity" => $actions[0],
+                "start" => date("G:i:s")
             ];
+
+            $this->setEnterLog($customer["id"]);
+
             return true;
         } else {
             $_SESSION["log"] = "lod data invalid";
