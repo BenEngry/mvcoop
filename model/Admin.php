@@ -256,6 +256,62 @@ class Admin
         return ["status" => true];
     }
 
+    public function graphStat($id, $type = "week")
+    {
+        $data = [];
+        switch ($type){
+            case "week":
+                $today = (int)date("d");
+                $month = date("M");
+                for ($i = 1; $i <= 7; $i++) {
+
+                    $stmt = $this->pdo->prepare("SELECT CEIL(SUM(sExit - sEntered)/60) `min` FROM `logs` WHERE day = :day AND idUser = :id");
+                    $stmt->execute(["id" => $id, "day" => $today]);
+                    $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+
+                    $time[] = $customer["min"]?: 0;
+                    $days[] = $today . " " . $month;
+                    $today -= 1;
+                }
+                $data["labels"] = array_reverse($days);
+                $data["dataArr"] = array_reverse($time);
+                break;
+            case "month":
+                $today = date(time());
+                for ($i = 1; $i != 30; $i++) {
+
+                    $stmt = $this->pdo->prepare("SELECT CEIL(SUM(sExit - sEntered)/60) `min` FROM `logs` WHERE day = :day AND month = :month AND idUser = :id");
+                    $stmt->execute(["id" => $id, "day" => date("d", $today), "month" => date("m", $today)]);
+                    $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+
+                    $time[] = $customer["min"]?: 0;
+                    $days[] = date("d", $today) . " " . date("M", $today);
+                    $today -= 86400;
+                }
+                $data["labels"] = array_reverse($days);
+                $data["dataArr"] = array_reverse($time);
+                break;
+            case "year":
+                $today = date(time());
+                for ($i = 1; $i <= 365; $i++) {
+
+                    $stmt = $this->pdo->prepare("SELECT CEIL(SUM(sExit - sEntered)/60) `min` FROM `logs` WHERE day = :day AND month = :month AND idUser = :id AND year = :year");
+                    $stmt->execute(["id" => $id, "day" => date("d", $today), "month" => date("m", $today), "year" => date("y", $today)]);
+                    $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+
+                    $time[] = $customer["min"]?: 0;
+                    $days[] = date("d", $today) . " " . date("M", $today) . " " . date("y", $today);
+                    $today -= 86400;
+                }
+                $data["labels"] = array_reverse($days);
+                $data["dataArr"] = array_reverse($time);
+                break;
+
+        }
+        $data["status"] = true;
+        return $data;
+    }
+
 
     public function testXML($role = "user")
     {

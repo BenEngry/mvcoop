@@ -114,47 +114,56 @@ class User
         $stmt = $this->pdo->prepare("CALL getAvgById(:id)");
         $stmt->execute(["id" => $id]);
         $customerAvg = $stmt->fetch($this->pdo::FETCH_LAZY);
-        $avg = $customerAvg["avgTime"] ?: "no data";
+        $avg = $customerAvg["avgTime"] ? ceil($customerAvg["avgTime"] /60) : "no data";
         $stmt->closeCursor();
 
         $stmt = $this->pdo->prepare("CALL getAvgDayById(:id)");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
-        $avgd = $customer["avgTime"] ?: "no data";
+        $avgd = $customer["avgTime"] ? ceil($customer["avgTime"]/60) : "no data";
         $stmt->closeCursor();
 
         $stmt = $this->pdo->prepare("CALL getAvgMonthById(:id)");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
-        $avgm = $customer["avgTime"] ?: "no data";
+        $avgm = $customer["avgTime"] ? ceil($customer["avgTime"]/60) : "no data";
         $stmt->closeCursor();
 
         $stmt = $this->pdo->prepare("CALL getAvgYearById(:id)");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
-        $avgy = $customer["avgTime"] ?: "no data";
+        $avgy = $customer["avgTime"] ? ceil($customer["avgTime"]/60) : "no data";
         $stmt->closeCursor();
 
         $stmt = $this->pdo->prepare("CALL getMaxSessionById(:id)");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
-        $min = $customer["maxTime"] ?: "no data";
+        $min = $customer["maxTime"] ? ceil($customer["maxTime"]/60) : "no data";
         $stmt->closeCursor();
 
         $stmt = $this->pdo->prepare("CALL getMinSessionById(:id)");
         $stmt->execute(["id" => $id]);
         $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
-        $max = $customer["maxTime"] ?: "no data";
+        $max = $customer["maxTime"] ? ceil($customer["maxTime"]/60) : "no data";
 
         return <<<HERE
             <div class="statistic">
                 <div class="mainInfo">
-                    <p>Max: $min s |</p>
-                    <p>Min: $max s |</p>
-                    <p>AVG: $avg s |</p>
-                    <p>AVG per day: $avgd s |</p>
-                    <p>AVG per month: $avgm s |</p>
-                    <p>AVG per year: $avgy s</p>
+                    <p>Max: $min m |</p>
+                    <p>Min: $max m |</p>
+                    <p>AVG: $avg m |</p>
+                    <p>AVG per day: $avgd m |</p>
+                    <p>AVG per month: $avgm m |</p>
+                    <p>AVG per year: $avgy m </p>
+                </div>
+                <div>
+                    <hr>
+                    <div class="chartBtnWrapper" data-id="$id">
+                        <button class="chartBtn" value="graph" data-type="week">Week</button>
+                        <button class="chartBtn" value="graph" data-type="month">Month</button>
+                        <button class="chartBtn" value="graph" data-type="year">Year</button>
+                    </div>
+                    <canvas id="myChart"></canvas>
                 </div>
             </div>
             HERE;

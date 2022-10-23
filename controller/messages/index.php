@@ -6,7 +6,6 @@ require_once("./model/Page.php");
 
 use nmvcsite\model\Page;
 
-
 $successText = false;
 if (isset($_SESSION['is_message_added']) && $_SESSION['is_message_added']) {
     $successText = true;

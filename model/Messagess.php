@@ -2,10 +2,12 @@
 
 class Messagess {
 
+    public $pdo;
     public $connect;
 
-    public function __construct($connect)
+    public function __construct($connect, $pdo)
     {
+        $this->pdo = $pdo;
         $this->connect = $connect;
     }
 
@@ -38,6 +40,30 @@ class Messagess {
         $queryString = "SELECT * FROM messages WHERE 1";
         $result_arr = mysqli_fetch_all(mysqli_query($this->connect, $queryString),MYSQLI_ASSOC);
         return $result_arr ?? [];
+    }
+
+    public function loadMessages()
+    {
+        $stmt = $this->pdo->prepare("");
+        $stmt->execute();
+        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+
+        return <<<HERE
+                <li data-id="{$customer['id']}">
+                    <label><strong> __('User Name') :</strong></label><em> {$customer['name']} </em><br>
+                    <label><strong> __('Title') :</strong></label><em> {$customer['title']} </em><br>
+                    <label><strong> __('Message') :</strong></label><em> {$customer['message']} </em><br>
+                    <label><strong> __('Created At') :</strong></label><em> {$customer['created_at']} </em><br>
+                    <?php if (isset({$_SESSION['user_data']}) and {$_SESSION['user_data']}['role'] == "1"):
+                    <input type="submit" id="admin" value= {$customer['id']} >Edit A</input>
+                    <?php elseif (isset({$_SESSION['user_data']}) and {$_SESSION['user_data']}['role'] == "2"):
+                    <input type="submit" id="manager" value= {$customer['id']} >Edit M</input>
+                    <?php endif
+                    <hr>
+                    <?php endforeach;
+                </li>
+                HERE;
+
     }
 
 }

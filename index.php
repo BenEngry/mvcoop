@@ -38,7 +38,7 @@ if(strpos($uri, $badUrl) === 0){
     }
 }
 
-$mes = new Messagess($connect);
+$mes = new Messagess($connect, $pdo);
 $auth = new Authorization($connect, $pdo);
 
 /** @var string $path */

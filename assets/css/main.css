@@ -404,3 +404,17 @@ pre {
 .mainInfo p {
 	margin: 10px 10px;
 }
+
+.chartBtn {
+	width: 70px;
+	background-color: #fff;
+	border: 1px solid #252525;
+	border-radius: 5px;
+	font-size: 15px;
+	transition: .4s ease-in-out;
+}
+
+.chartBtn:hover {
+	background: #0f6674;
+	color: white;
+}
