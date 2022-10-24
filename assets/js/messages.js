@@ -3,7 +3,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     const adminButtons = [...document.querySelectorAll(".btn")];
 
     adminButtons.forEach(item => {
-        console.log('w');
         item.addEventListener("click", e => {
             e.preventDefault();
             const id = item.dataset.id;
@@ -27,29 +26,35 @@ window.addEventListener('DOMContentLoaded', (event) => {
         })
     })
 
-    const editTemp = `
-        <li className="mesWrapper" data-id="{$row[" id"]}">
+    const editTemp = (idMess, idUs, name, mes) =>{ return `
+        <li className="mesWrapper" data-id="${idMess}">
             <div className="infRow">
                 <div>
                     <h4 class="tlt"></h4>
                     <span class="us">
-                        by <a href='/user?id={$row["idUser"]}' className='userLink'>"{$row["name"]}"</a>
+                        by <a href='/user?id=${idUs}' class='userLink'>${name}</a>
                     </span>
                 </div>
                 <p class="tm"></p>
             </div>
             <hr>
                 <div class="ms">
-                    {$row["message"]}
+                    ${mes}
                 </div>
         </li>
-        `;
+        `};
 
-
-
-    const edit = [...document.querySelectorAll(".")];
+    const edit = [...document.querySelectorAll(".edit")];
     edit.forEach(item => {
-
-    }
+        item.addEventListener("click", e => {
+            e.preventDefault();
+            const id = item.data.id;
+            const divMes = document.querySelector(`#message-${id}`);
+            const li = document.querySelector(`#li-${id}`);
+            const title = document.querySelector(`#title-${id}`);
+            li.innerHTML = editTemp(id, 50, "name", divMes);
+            return null;
+        });
+    });
 
 });

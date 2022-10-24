@@ -5,6 +5,11 @@ declare(strict_types=1);
  * @website: https://profstep.com
  **/
 
+$xml = simplexml_load_file("./assets/settings/init.xml");
+
+//$var = $xml->host;
+//const HOST = $xml->host; ????
+
 const HOST = 'http://nmvc.site';
 const BASE_URL = '/';
 

@@ -65,18 +65,18 @@ class Messagess {
 
             }
             $messages .= <<<HERE
-                    <li class="mesWrapper" data-id="{$row["id"]}">
+                    <li class="mesWrapper" data-li="{$row["id"]}">
                         <div class="infRow">
                             <div>
-                                <h4>{$row["title"]}</h4>
+                                <h4 data-title="{$row["id"]}>{$row["title"]}</h4>
                                 <span data-name="{$row["login"]}">
-                                    by <a href='/user?id={$row["idUser"]}' class='userLink'>"{$row["name"]}"</a>
+                                    by <a data-user="{$row["idUser"]}" href='/user?id={$row["idUser"]}' class='userLink'>"{$row["name"]}"</a>
                                 </span>
                             </div>
                             <p>{$row["created_at"]}</p>
                         </div>
                         <hr>
-                        <div>
+                        <div data-message="{$row["id"]}">
                             {$row["message"]}
                         </div>
                         $btns

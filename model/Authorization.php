@@ -48,7 +48,7 @@ class Authorization
             return false;
         } elseif (
             $fields['email'] == $customer['email'] and
-            $fields['password'] == $customer['password']
+            password_verify($fields['password'], $customer['password'])
         ) {
             $_SESSION["log"] = "logined";
             $_SESSION['user_data'] = [
@@ -108,9 +108,9 @@ class Authorization
 
         $stmtUsers = $this->pdo->prepare("INSERT INTO users (`id`, `email`, `login`, `password`, `role`, `promotion`) VALUES (null, :email, :login, :password, :role, :promotion)");
         $stmtUsers->execute([
-            "email" => $fields['email'],
-            "login" => $fields['name'],
-            "password" => $fields['password'],
+            "email" => htmlspecialchars($fields['email']),
+            "login" => htmlspecialchars($fields['name']),
+            "password" => password_hash(htmlspecialchars($fields['password']), PASSWORD_BCRYPT),
             "role" => (integer)$actions["role"],
             "promotion" => (integer)$actions["promotion"]
         ]);

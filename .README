@@ -1,7 +1,7 @@
 XML - 50%
 CLI - no
 PDO - yes
-LOG STATISTIC - no
-ADMIN PANEL - 70%
-VALIDATE - no
-NORMAL AUTH - no
+LOG STATISTIC - yes
+ADMIN PANEL - yes
+VALIDATE - yes
+NORMAL AUTH - yes

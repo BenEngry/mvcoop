@@ -37,9 +37,9 @@
                     <label for="name" class="name"><?=__('Name')?></label>
                     <input type="text" name="name" id="name">
                     <label for="email" class="email"><?=__('Email')?></label>
-                    <input type="text" name="email" id="email">
+                    <input type="email" name="email" id="email">
                     <label for="password" class="password"><?=__('Password')?></label>
-                    <input type="text" name="password" id="password">
+                    <input type="password" name="password" id="password">
                     <input  type="submit"class="submit__btn" id="sendDataBtn"><?=__('Register')?></input>
                 </form>
             </div>

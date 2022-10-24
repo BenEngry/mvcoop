@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <host>http://nmvc.site</host>
+    <baseUrl>/</baseUrl>
+    <dbHost>localhost</dbHost>
+    <dbName>mvc</dbName>
+    <dbUser>root</dbUser>
+    <dbPass></dbPass>
+    <dbCharset>utf-8</dbCharset>
+    <dbOptions>[PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,]</dbOptions>
+</root>
