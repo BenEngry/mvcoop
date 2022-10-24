@@ -1,9 +1,5 @@
 <form method="post">
     <div>
-        <label for="messageName"><?= __('User Name') ?></label>
-        <input id="messageName" name="name" value="<?= $fields['name'] ?>">
-    </div>
-    <div>
         <label for="messageName"><?= __('Title') ?></label>
         <input id="messageName" name="title" value="<?= $fields['title'] ?>">
     </div>

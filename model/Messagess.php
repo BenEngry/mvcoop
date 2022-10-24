@@ -18,7 +18,7 @@ class Messagess {
     }
 
     public function setMessage($fields) : bool {
-        $queryString = sprintf("INSERT into messages VALUES (null, '%s', '%s', '%s', now(), '0')", $fields['name'], $fields['title'], $fields['message']);
+        $queryString = sprintf("INSERT into messages VALUES (null, '%s', '%s', '%s', now(), '0', '%s')", $_SESSION['user_data']['name'], $fields['title'], $fields['message'], $_SESSION["user_data"]["id"]);
         $result = mysqli_query($this->connect, $queryString) or die(mysqli_error($this->connect));
         return is_bool($result)? $result : false;
     }
@@ -36,34 +36,97 @@ class Messagess {
         return $result_arr ?? [];
     }
 
-    public function getMessages() : array {
-        $queryString = "SELECT * FROM messages WHERE 1";
-        $result_arr = mysqli_fetch_all(mysqli_query($this->connect, $queryString),MYSQLI_ASSOC);
-        return $result_arr ?? [];
+    public function delMessage($id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM `messsages` WHERE id = :id");
+        $stmt->execute(["id" => $id]);
+        return ["status" => true];
     }
 
-    public function loadMessages()
+    public function loadMessages($page)
     {
-        $stmt = $this->pdo->prepare("");
-        $stmt->execute();
-        $customer = $stmt->fetch($this->pdo::FETCH_LAZY);
+        $stmt = $this->pdo->prepare("CALL getMessagesPage(:page)");
+        $stmt->execute(["page" => $page]);
 
-        return <<<HERE
-                <li data-id="{$customer['id']}">
-                    <label><strong> __('User Name') :</strong></label><em> {$customer['name']} </em><br>
-                    <label><strong> __('Title') :</strong></label><em> {$customer['title']} </em><br>
-                    <label><strong> __('Message') :</strong></label><em> {$customer['message']} </em><br>
-                    <label><strong> __('Created At') :</strong></label><em> {$customer['created_at']} </em><br>
-                    <?php if (isset({$_SESSION['user_data']}) and {$_SESSION['user_data']}['role'] == "1"):
-                    <input type="submit" id="admin" value= {$customer['id']} >Edit A</input>
-                    <?php elseif (isset({$_SESSION['user_data']}) and {$_SESSION['user_data']}['role'] == "2"):
-                    <input type="submit" id="manager" value= {$customer['id']} >Edit M</input>
-                    <?php endif
-                    <hr>
-                    <?php endforeach;
-                </li>
-                HERE;
+        $messages = "";
 
+
+        while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
+            $btns = "";
+
+            if($_SESSION["user_data"]["opportunity"]["delUsersMessages"] == 1) {
+                $btns = <<<HERE
+                        <div>
+                            <hr>
+                            <button type="submit" data-type="edit" data-id="{$row['id']}" class="up edit btn" >Edit</button>
+                            <button type="submit" data-type="del" data-id="{$row['id']}" class="del btn" >Delete</button>
+                        </div>
+                    HERE;
+
+            }
+            $messages .= <<<HERE
+                    <li class="mesWrapper" data-id="{$row["id"]}">
+                        <div class="infRow">
+                            <div>
+                                <h4>{$row["title"]}</h4>
+                                <span data-name="{$row["login"]}">
+                                    by <a href='/user?id={$row["idUser"]}' class='userLink'>"{$row["name"]}"</a>
+                                </span>
+                            </div>
+                            <p>{$row["created_at"]}</p>
+                        </div>
+                        <hr>
+                        <div>
+                            {$row["message"]}
+                        </div>
+                        $btns
+                    </li>
+                    HERE;
+        }
+        return $messages;
+    }
+
+    public function loadCurrentMessages($id, $page)
+    {
+        $stmt = $this->pdo->prepare("CALL getCurrentMessagesPage(:id, :page)");
+        $stmt->execute(["id" => $id, "page" => $page]);
+
+        $messages = "";
+
+        while ($row = $stmt->fetch($this->pdo::FETCH_LAZY)) {
+            $btns = "";
+
+            if($_SESSION["user_data"]["opportunity"]["delUsersMessages"] == 1) {
+                $btns = <<<HERE
+                        <div>
+                            <hr>
+                            <button type="submit" data-type="" data-id="{$row['id']}" class="up btn" >Edit</button>
+                            <button type="submit" data-type="del" data-id="{$row['id']}" class="del btn" >Delete</button>
+                        </div>
+                    HERE;
+
+            }
+            $messages .= <<<HERE
+                    <li class="mesWrapper" data-id="{$row["id"]}">
+                        <div class="infRow">
+                            <div>
+                                <h4>{$row["title"]}</h4>
+                                <span data-name="{$row["login"]}">
+                                    by <a href='/user?id={$row["idUser"]}' class='userLink'>"{$row["name"]}"</a>
+                                </span>
+                            </div>
+                            <p>{$row["created_at"]}</p>
+                        </div>
+                        <hr>
+                        <div>
+                            {$row["message"]}
+                        </div>
+                        $btns
+                    </li>
+                    HERE;
+
+        }
+        return $messages;
     }
 
 }

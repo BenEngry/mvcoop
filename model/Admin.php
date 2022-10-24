@@ -239,10 +239,10 @@ class Admin
     public function loadButtons($id)
     {
         $btns = "";
-        if ($_SESSION['user_data']['opportunity']['delUser'] == 1) {
+        if ($_SESSION['user_data']['opportunity']['delUser'] == 1 AND $_SESSION["user_data"]["id"] != $id) {
             $btns .= "<button data-id='$id' data-type='del' class='del btn'> Delete </button>";
         }
-        if ($_SESSION['user_data']['opportunity']['promoteUser'] == 1) {
+        if ($_SESSION['user_data']['opportunity']['promoteUser'] == 1 AND $_SESSION["user_data"]["id"] != $id) {
             $btns .= "<button data-id='$id' data-type='up' class='up btn'> Up </button>
                     <button data-id='$id' data-type='down' class='down btn'> Down </button>";
         }

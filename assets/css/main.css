@@ -335,6 +335,7 @@ pre {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	margin-bottom: 50px;
 }
 
 .actions {
@@ -417,4 +418,20 @@ pre {
 .chartBtn:hover {
 	background: #0f6674;
 	color: white;
+}
+
+.infRow {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+}
+
+.mesWrapper {
+	width: 800px;
+
+	border: 1px solid #0c5460;
+	border-radius: 10px;
+	padding: 20px 40px;
+
+	margin-bottom: 40px;
 }

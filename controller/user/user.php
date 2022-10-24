@@ -27,6 +27,7 @@ $nav = $page->loadNavBar();
 
 $actions = "";
 $stat = "";
+$messages = $mes->loadCurrentMessages($_GET["id"],$_GET["p"] ?: 1);
 
 if(isset($_GET["id"]) and strlen($_GET["id"]) > 0) {
     if ($viewRole > 0) {
